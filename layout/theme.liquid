@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ 'general.locale' | t }}">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>
       {% if template.name == "index" %}
         {{ 'general.store_name' | t }} &#183; {{ page_title }}
@@ -16,7 +16,7 @@
     {{ 'application.scss.css' | asset_url | stylesheet_tag }}
     {{ 'application.js' | asset_url | script_tag }}
   </head>
-  <body>
+  <body class="{{ template.name }}">
 
     {% for link in linklists.main-menu.links %}
       {% assign child_list_handle = link.title | handleize %}

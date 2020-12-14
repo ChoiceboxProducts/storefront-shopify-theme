@@ -1,5 +1,6 @@
 {
   "general": {
+    "locale": "en",
     "store_name": "Choicebox",
     "404": {
       "title": "Not found",
