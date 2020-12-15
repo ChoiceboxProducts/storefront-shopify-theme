@@ -1,0 +1,83 @@
+/* Put your styles in this file.
+   Note: "@import" rules aren’t supported. */
+
+/* Custom Properties */
+
+:root {
+  --page-border-color: #fff;
+  --page-border-width: 10px;
+}
+
+/* General */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* TODO: Style scrollbars for Firefox */
+*::-webkit-scrollbar {
+  background-color: green;
+  height: 8px;
+  width: 7px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: blue;
+}
+
+/* Layout */
+
+html {
+    height: 100%;
+}
+
+html::before {
+  border: var(--page-border-width) solid var(--page-border-color);
+  content: "";
+  display: block;
+  height: 100%;
+  left: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+body {
+  font-family: sans-serif;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  padding: var(--page-border-width);
+}
+
+body > div {
+  background-color: red;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.page-header {
+  flex: 0 0;
+  background-color: blue;
+}
+
+main {
+  flex: 1 0;
+  background-color: yellow;
+}
+
+.page-footer {
+  flex: 0 0;
+  background-color: green; 
+}
+
+/* Front page */
+
+.index {
+    
+}
