@@ -1,0 +1,49 @@
+<section>
+  {% if section.settings.heading != blank %}
+    {% comment %}TODO: No way to dynamically adjust header-level :({% endcomment %}
+    <h2>{{ section.settings.heading | escape }}</h2>
+  {% endif %}
+  {% if section.settings.hook != blank %}
+    <p>{{ section.settings.hook | escape }}</p>
+  {% endif %}
+
+  {% form 'customer' %}
+    {{ form.errors | default_errors }}
+    {% if form.posted_successfully? %}
+      <p>{{ 'general.coming_soon.thanks' | t }}</p>
+    {% else %}
+      <input type="hidden" name="contact[tags]" value="{{ section.settings.tag }}">
+      <input type="email"
+        name="contact[email]"
+        id="Email"
+        value="{% if customer.email != blank %}{{ customer.email }}{% endif %}"
+        placeholder="{{ 'general.coming_soon.placeholder' | t }}"
+        autocorrect="off"
+        autocapitalize="off">
+      <button type="submit" name="commit" id="Subscribe">
+        <span>{{ 'general.coming_soon.submit' | t }}</span>
+      </button>
+    {% endif %}
+  {% endform %}
+</section>
+
+{% schema %}
+  {
+    "name": "Coming Soon",
+    "settings": [
+      {
+        "type": "text",
+        "id": "tag",
+        "label": "Tag Name"
+      },
+      {
+        "type": "paragraph",
+        "content": "Any customers who sign up will have an account created for them in Shopify. [View customers](/admin/customers?query=&accepts_marketing=1)"
+      }
+    ],
+    "presets": [{
+        "name": "Coming Soon",
+        "category": "Promotional"
+    }]
+  }
+{% endschema %}

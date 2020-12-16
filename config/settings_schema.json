@@ -1,9 +1,43 @@
 [
   {
-    "name": "Coming Soon",
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "page_border_color",
+        "label": "Page border color",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "page_background_color",
+        "label": "Page background color",
+        "default": "#eef9ff"
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "text",
+        "id": "page_border_width",
+        "label": "Page border width",
+        "default": "0.5rem"
+      },
+      {
+        "type": "text",
+        "id": "page_content_max_width",
+        "label": "Page Content Max Width",
+        "default": "78rem"
+      }
+    ]
+  },
+  {
+    "name": "theme_info",
     "theme_name": "Coming Soon",
-    "theme_version": "0.1.0",
     "theme_author": "Choicebox Products LLC",
+    "theme_version": "0.1.0",
     "theme_documentation_url": "https://github.com/ChoiceboxProducts/shopify-theme",
     "theme_support_email": "matt@choicebox.shop"
   }

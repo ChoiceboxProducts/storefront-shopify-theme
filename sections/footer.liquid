@@ -1,0 +1,51 @@
+{% if section.settings.active %}
+  <style>
+    footer ul {
+      margin: 0;
+    }
+
+    .links {
+      display: inline;
+      padding: 0;
+    }
+
+    .links li {
+      display: inline;
+    }
+
+    .links li:before {
+      content: "\22C5\00A0";
+    }
+  </style>
+
+  <footer class="page-footer">
+    <small>
+      <span class="copyright">&copy; {{ "now" | date: "%Y" }} {{ shop.name }}.</span>
+      {% if linklists.footer.links != blank %}
+        <ul class="links">
+          {% for link in linklists.footer.links %}
+            <li><a href="{{ link.url }}">{{ link.title | t }}</a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </small>
+  </footer>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "active",
+        "label": "Active",
+        "default": true
+      }
+    ],
+    "presets": [{
+        "name": "Footer",
+        "category": "Page Layout"
+    }]
+  }
+{% endschema %}

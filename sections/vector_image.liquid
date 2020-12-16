@@ -1,0 +1,40 @@
+{% if section.settings.svg_content != blank %}
+  <svg xmlns="http://www.w3.org/2000/svg" fill="{{ section.settings.fill_color }}" width="{{ section.settings.width }}" height="{{ section.settings.height }}" viewbox="0 0 {{ section.settings.width }} {{ section.settings.height}}">
+    {{ section.settings.svg_content }}
+  </svg>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Vector Image",
+    "settings": [
+      {
+        "type": "html",
+        "id": "svg_content",
+        "label": "SVG Contents"
+      },
+      {
+        "type": "color",
+        "id": "fill_color",
+        "label": "Fill Color",
+        "default": "#000"
+      },
+      {
+        "type": "text",
+        "id": "width",
+        "label": "Width",
+        "default": "200"
+      },
+      {
+        "type": "text",
+        "id": "height",
+        "label": "Height",
+        "default": "200"
+      }
+    ],
+    "presets": [{
+      "name": "Vector Image",
+      "category": "Images"
+    }]
+  }
+{% endschema %}

@@ -4,8 +4,10 @@
 /* Custom Properties */
 
 :root {
-  --page-border-color: #fff;
-  --page-border-width: 10px;
+  --page-background-color: {{ settings.page_background_color }};
+  --page-border-color: {{ settings.page_border_color }};
+  --page-border-width: {{ settings.page_border_width }};
+  --page-content-max-width: {{ settings.page_content_max_width }};
 }
 
 /* General */
@@ -18,22 +20,22 @@
 
 /* TODO: Style scrollbars for Firefox */
 *::-webkit-scrollbar {
-  background-color: green;
+  background-color: transparent;
   height: 8px;
   width: 7px;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: blue;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* Layout */
 
 html {
-    height: 100%;
+  height: 100%;
 }
 
-html::before {
+body::before {
   border: var(--page-border-width) solid var(--page-border-color);
   content: "";
   display: block;
@@ -46,6 +48,7 @@ html::before {
 }
 
 body {
+  background-color: var(--page-background-color);
   font-family: sans-serif;
   height: 100%;
   margin: 0;
@@ -53,8 +56,7 @@ body {
   padding: var(--page-border-width);
 }
 
-body > div {
-  background-color: red;
+.page {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -63,17 +65,23 @@ body > div {
 
 .page-header {
   flex: 0 0;
-  background-color: blue;
-}
-
-main {
-  flex: 1 0;
-  background-color: yellow;
+  background-color: rgba(0, 0, 255, 0.1);
 }
 
 .page-footer {
   flex: 0 0;
-  background-color: green; 
+  background-color: rgba(0, 255, 0, 0.1);
+}
+
+main {
+  flex: 1 0;
+}
+
+main,
+.page > .shopify-section {
+  max-width: var(--page-content-max-width);
+  align-self: center;
+  width: 100%;
 }
 
 /* Front page */

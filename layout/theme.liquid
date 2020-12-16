@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ 'general.locale' | t }}">
+<html lang="{{ shop.locale }}">
   <head>
     <meta charset="utf-8" />
     <title>
@@ -17,13 +17,12 @@
     {{ 'application.js' | asset_url | script_tag }}
   </head>
   <body class="{{ template.name }}">
-    <div>
-      {% include 'page_header' %}
-
+    <div class="page">
+      {% section 'header' %}
       <main>
         {{ content_for_layout }}
       </main>
-      {% include 'page_footer' %}
+      {% section 'footer' %}
     </div>
   </body>
 </html>
