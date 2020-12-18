@@ -1,0 +1,53 @@
+<section class="hero hero-{{ section.id }}">
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'message' %}
+        <style>
+          .hero-{{ section.id }} {
+            font-size: {{ block.settings.font_size }};
+          }
+
+          .hero-{{ section.id }} p {
+            margin: {{ block.settings.margin }};
+          }
+        </style>
+
+        {{ block.settings.message }}
+    {% endcase %}
+  {% endfor %}
+</section>
+
+{% schema %}
+  {
+    "name": "Hero",
+    "presets": [{
+        "name": "Hero",
+        "category": "Page Layout"
+    }],
+    "blocks": [
+      {
+        "name": "Message",
+        "type": "message",
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "message",
+            "label": "Message"
+          },
+          {
+            "type": "text",
+            "id": "font_size",
+            "label": "Font Size",
+            "default": "1.8rem"
+          },
+          {
+            "type": "text",
+            "id": "margin",
+            "label": "Margin",
+            "default": "0"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

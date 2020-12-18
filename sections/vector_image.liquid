@@ -1,5 +1,12 @@
 {% if section.settings.svg_content != blank %}
-  <svg xmlns="http://www.w3.org/2000/svg" fill="{{ section.settings.fill_color }}" width="{{ section.settings.width }}" height="{{ section.settings.height }}" viewbox="0 0 {{ section.settings.width }} {{ section.settings.height}}">
+  <style>
+    .svg-{{ section.id }} {
+      width: calc({{ section.settings.width }}px * {{ section.settings.scale }});
+      height: calc({{ section.settings.height }}px * {{ section.settings.scale }});
+    }
+  </style>
+
+  <svg class="svg-{{ section.id }}" xmlns="http://www.w3.org/2000/svg" fill="{{ section.settings.fill_color }}" width="{{ section.settings.width }}" height="{{ section.settings.height }}" viewbox="0 0 {{ section.settings.width }} {{ section.settings.height}}">
     {{ section.settings.svg_content }}
   </svg>
 {% endif %}
@@ -22,14 +29,20 @@
       {
         "type": "text",
         "id": "width",
-        "label": "Width",
+        "label": "Intrinsic Width",
         "default": "200"
       },
       {
         "type": "text",
         "id": "height",
-        "label": "Height",
+        "label": "Intristic Height",
         "default": "200"
+      },
+      {
+        "type": "text",
+        "id": "scale",
+        "label": "Scale",
+        "default": "1"
       }
     ],
     "presets": [{

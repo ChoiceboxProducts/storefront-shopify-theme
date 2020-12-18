@@ -13,6 +13,23 @@
         "id": "page_background_color",
         "label": "Page background color",
         "default": "#eef9ff"
+      },
+      {
+        "type": "color",
+        "id": "default_copy_color",
+        "label": "Default copy color",
+        "default": "#223b60"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "base_font",
+        "label": "Base Font",
+        "default": "avenir_next_n4"
       }
     ]
   },

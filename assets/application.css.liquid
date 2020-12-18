@@ -4,6 +4,7 @@
 /* Custom Properties */
 
 :root {
+  --default-copy-color: {{ settings.default_copy_color }};
   --page-background-color: {{ settings.page_background_color }};
   --page-border-color: {{ settings.page_border_color }};
   --page-border-width: {{ settings.page_border_width }};
@@ -29,6 +30,10 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+strong {
+  font-weight: 600;
+}
+
 /* Layout */
 
 html {
@@ -49,7 +54,8 @@ body::before {
 
 body {
   background-color: var(--page-background-color);
-  font-family: sans-serif;
+  color: var(--default-copy-color);
+  font-family: {{ settings.base_font.family }}, {{ settings.base_font.fallback_families }};
   height: 100%;
   margin: 0;
   overflow: hidden;
@@ -86,6 +92,6 @@ main,
 
 /* Front page */
 
-.index {
-    
+.index main {
+  margin-top: 10rem;
 }
