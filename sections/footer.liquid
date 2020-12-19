@@ -21,6 +21,9 @@
   <footer class="page-footer">
     <small>
       <span class="copyright">&copy; {{ "now" | date: "%Y" }} {{ shop.name }}.</span>
+      {% if section.settings.static_text != blank %}
+        <span>{{ section.settings.static_text | t }}</span>
+      {% endif %}
       {% if linklists.footer.links != blank %}
         <ul class="links">
           {% for link in linklists.footer.links %}
@@ -41,6 +44,11 @@
         "id": "active",
         "label": "Active",
         "default": true
+      },
+      {
+        "type": "text",
+        "id": "static_text",
+        "label": "Static Text"
       }
     ],
     "presets": [{

@@ -18,6 +18,30 @@
     url({{ 'spartan-v2-latin-700.woff' | asset_url }}) format('woff');
 }
 
+/* Inter Variable - latin */
+@font-face {
+    font-family: 'Inter V';
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: local(''),
+         url({{ 'inter-v3.15-latin-var.woff2' | asset_url }}) format('woff2');
+    unicode-range: U+0000-007F,U+00A0-0100,U+0131,U+0152-0154,U+02BB-02BD,U+02C6,U+02DA,U+02DC,U+2000-200C,U+2010-2028,U+202F-2060,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+FEFF;
+    font-named-instance: 'Regular';
+}
+
+/* Inter Variable Italic - latin */
+@font-face {
+    font-family: 'Inter V';
+    font-style: oblique 0deg 10deg;
+    font-weight: 100 900;
+    font-display: swap;
+    src: local(''),
+         url({{ 'inter-v3.15-latin-var.woff2' | asset_url }}) format('woff2');
+    unicode-range: U+0000-007F,U+00A0-0100,U+0131,U+0152-0154,U+02BB-02BD,U+02C6,U+02DA,U+02DC,U+2000-200C,U+2010-2028,U+202F-2060,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+FEFF;
+    font-named-instance: 'Italic';
+}
+
 /* Custom Properties */
 :root {
   --default-copy-color: {{ settings.default_copy_color }};
@@ -25,6 +49,10 @@
   --page-border-color: {{ settings.page_border_color }};
   --page-border-width: {{ settings.page_border_width }};
   --page-content-max-width: {{ settings.page_content_max_width }};
+  --neutral-accent-color: {{ settings.neutral_color }};
+  --positive-accent-color: {{ settings.positive_color }};
+  --negative-accent-color: {{ settings.negative_color }};
+  --primary-accent-color: {{ settings.primary_accent_color }};
 }
 
 /* General */
@@ -46,13 +74,72 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+*:focus {
+  outline: none;
+}
+
 strong {
   font-weight: 600;
 }
 
+small {
+  font-size: 0.9375rem;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: {{ settings.display_font }}, sans-serif;
-  line-height: 1.6;
+  letter-spacing: -0.03rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+h1,  {
+  font-size: 2.5rem;
+}
+
+input,
+select,
+textarea,
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-family: inherit;
+  font-size: inherit;
+  border: 0;
+  padding: 1.1rem 1.2rem 0.9rem;
+  border-radius: 4px;
+  color: inherit;
+}
+
+input::placeholder {
+  color: inherit;
+  opacity: 0.5;
+}
+
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  cursor: pointer;
+  background-color: var(--primary-accent-color);
+  color: #fff;
+  font-weight: 700;
+  font-family: {{ settings.display_font }}, sans-serif;
+  vertical-align: bottom;
+}
+
+button[type="submit"],
+input[type="submit"] {
+  background-image: url("data:image/svg+xml,%3Csvg width='29' height='25' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M27.5 12.5h-26M17.4 2.4l10.1 10.1L17.4 2.4zm10.1 10.1L17.4 22.6l10.1-10.1z' stroke='%23fff' stroke-width='2.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 17px) 50%;
+  padding-right: 3rem;
+}
+
+button[type="submit"] > span,
+input[type="submit"] > span {
+  padding-right: 1rem;
 }
 
 /* Layout */
@@ -81,6 +168,8 @@ body {
   margin: 0;
   overflow: hidden;
   padding: var(--page-border-width);
+  font-size: 1.25rem;
+  line-height: 1.5;
 }
 
 .page {
@@ -97,7 +186,6 @@ body {
 
 .page-footer {
   flex: 0 0;
-  background-color: rgba(0, 255, 0, 0.1);
 }
 
 main {

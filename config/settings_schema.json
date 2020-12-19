@@ -17,6 +17,30 @@
                 "id": "default_copy_color",
                 "label": "Default copy color",
                 "default": "#223b60"
+            },
+            {
+                "type": "color",
+                "id": "positive_color",
+                "label": "Positive Color",
+                "default": "#64b225"
+            },
+            {
+                "type": "color",
+                "id": "neutral_color",
+                "label": "Neutral Color",
+                "default": "#18a0fb"
+            },
+            {
+                "type": "color",
+                "id": "negative_color",
+                "label": "Negative Color",
+                "default": "#ff4466"
+            },
+            {
+                "type": "color",
+                "id": "primary_accent_color",
+                "label": "Primary Accent Color",
+                "default": "#ff7144"
             }
         ]
     },
@@ -26,7 +50,7 @@
                 "type": "text",
                 "id": "copy_font",
                 "label": "Copy Font",
-                "default": "Inter"
+                "default": "Inter V"
             },
             {
                 "type": "text",

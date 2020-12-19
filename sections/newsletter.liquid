@@ -1,27 +1,62 @@
-<section>
+<style>
+  .newsletter-{{ section.id }} input[type="email"] {
+    width: 30rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    font-weight: 500;
+  }
+
+  .newsletter-{{ section.id }} button {
+    background-color: {{ settings.primary_accent_color }};
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    color: #fff;
+  }
+
+  .newsletter-{{ section.id }} input[type="email"],
+  .newsletter-{{ section.id }} button {
+    font-size: 1.375rem;
+    height: 4rem;
+  }
+
+  .newsletter-{{ section.id }} h1 {
+    color: var(--positive-accent-color);
+  }
+
+  .newsletter-{{ section.id }} p {
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
+</style>
+
+<section class="newsletter-{{ section.id }}">
   {% if section.settings.heading != blank %}
     {% comment %}TODO: No way to dynamically adjust header-level :({% endcomment %}
-    <h2>{{ section.settings.heading | escape }}</h2>
+    <h1>{{ section.settings.heading | t }}</h1>
   {% endif %}
   {% if section.settings.hook != blank %}
-    <p>{{ section.settings.hook | escape }}</p>
+    <p>{{ section.settings.hook | t }}</p>
   {% endif %}
 
   {% form 'customer' %}
     {{ form.errors | default_errors }}
     {% if form.posted_successfully? %}
-      <p>{{ 'general.coming_soon.thanks' | t }}</p>
+      <p>{{ section.settings.confirmation_message | t }}</p>
     {% else %}
       <input type="hidden" name="contact[tags]" value="{{ section.settings.tag }}">
       <input type="email"
         name="contact[email]"
         id="Email"
         value="{% if customer.email != blank %}{{ customer.email }}{% endif %}"
-        placeholder="{{ 'general.coming_soon.placeholder' | t }}"
+        placeholder="{{ section.settings.placeholder | t }}"
         autocorrect="off"
-        autocapitalize="off">
-      <button type="submit" name="commit" id="Subscribe">
-        <span>{{ 'general.coming_soon.submit' | t }}</span>
+        autocapitalize="off"><!-- Dirty whitespace hack
+        --><button type="submit" name="commit" id="Subscribe">
+        {% assign submit_button = section.settings.submit_button | t %}
+        {% if submit_button != blank %}
+          <span>{{ section.settings.submit_button | t }}</span>
+        {% endif %}
+        </svg>
       </button>
     {% endif %}
   {% endform %}
@@ -34,7 +69,38 @@
       {
         "type": "text",
         "id": "tag",
-        "label": "Tag Name"
+        "label": "Tag Name",
+        "info": "The tag applied to the contact after subscription. Don't change this unless you know what you're doing. [View more](https://help.shopify.com/en/manual/shopify-admin/productivity-tools/using-tags)"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Newsletter"
+      },
+      {
+        "type": "text",
+        "id": "hook",
+        "label": "Hook",
+        "default": "Sign up to our newsletter below:"
+      },
+      {
+        "type": "text",
+        "id": "submit_button",
+        "label": "Submit Button",
+        "default": "Subscribe"
+      },
+      {
+        "type": "text",
+        "id": "placeholder",
+        "label": "Placeholder",
+        "default": "Email address"
+      },
+      {
+        "type": "text",
+        "id": "confirmation_message",
+        "label": "Confirmation Message",
+        "default": "Thanks! You have successfully subscribed."
       },
       {
         "type": "paragraph",

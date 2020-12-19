@@ -6,10 +6,12 @@
           .hero-{{ section.id }} {
             font-size: {{ block.settings.font_size }};
             line-height: 1.5;
+            margin-bottom: 7rem;
           }
 
           .hero-{{ section.id }} p {
             margin: {{ block.settings.margin }};
+            letter-spacing: -0.02rem;
             font-family: {% case block.settings.font %}
               {% when 'display' %}
                 {{ settings.display_font }}
