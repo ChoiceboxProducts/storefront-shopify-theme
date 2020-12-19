@@ -5,10 +5,17 @@
         <style>
           .hero-{{ section.id }} {
             font-size: {{ block.settings.font_size }};
+            line-height: 1.5;
           }
 
           .hero-{{ section.id }} p {
             margin: {{ block.settings.margin }};
+            font-family: {% case block.settings.font %}
+              {% when 'display' %}
+                {{ settings.display_font }}
+              {% when 'copy' %}
+                {{ settings.copy_font }}
+              {% endcase %}, sans-serif;
           }
         </style>
 
@@ -28,6 +35,7 @@
       {
         "name": "Message",
         "type": "message",
+        "limit": 1,
         "settings": [
           {
             "type": "richtext",
@@ -45,6 +53,16 @@
             "id": "margin",
             "label": "Margin",
             "default": "0"
+          },
+          {
+            "type": "select",
+            "id": "font",
+            "label": "Font",
+            "options": [
+              { "value": "display", "label": "Display" },
+              { "value": "copy", "label": "Copy" }
+            ],
+            "default": "display"
           }
         ]
       }

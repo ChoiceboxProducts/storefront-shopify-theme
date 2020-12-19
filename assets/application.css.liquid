@@ -1,8 +1,24 @@
-/* Put your styles in this file.
-   Note: "@import" rules aren’t supported. */
+/* Spartan-500 - latin */
+@font-face {
+    font-family: 'Spartan';
+    font-style: normal;
+    font-weight: 500;
+    src: local(''),
+    url({{ 'spartan-v2-latin-500.woff2' | asset_url }}) format('woff2'),
+    url({{ 'spartan-v2-latin-500.woff' | asset_url }}) format('woff');
+}
+
+/* Spartan-700 - latin */
+@font-face {
+    font-family: 'Spartan';
+    font-style: normal;
+    font-weight: 700;
+    src: local(''),
+    url({{ 'spartan-v2-latin-700.woff2' | asset_url }}) format('woff2'),
+    url({{ 'spartan-v2-latin-700.woff' | asset_url }}) format('woff');
+}
 
 /* Custom Properties */
-
 :root {
   --default-copy-color: {{ settings.default_copy_color }};
   --page-background-color: {{ settings.page_background_color }};
@@ -34,6 +50,11 @@ strong {
   font-weight: 600;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: {{ settings.display_font }}, sans-serif;
+  line-height: 1.6;
+}
+
 /* Layout */
 
 html {
@@ -55,7 +76,7 @@ body::before {
 body {
   background-color: var(--page-background-color);
   color: var(--default-copy-color);
-  font-family: {{ settings.base_font.family }}, {{ settings.base_font.fallback_families }};
+  font-family: {{ settings.copy_font }}, sans-serif;
   height: 100%;
   margin: 0;
   overflow: hidden;
