@@ -78,6 +78,20 @@
   outline: none;
 }
 
+a:link,
+a:visited {
+  color: {{ settings.anchor_color }};
+  text-decoration: underline;
+  text-decoration-color: {{ settings.anchor_underline_color }};
+  text-decoration-thickness: 0.1em;
+  transition: text-decoration-color 100ms;
+}
+
+a:hover {
+  color: {{ settings.anchor_hover_color }};
+  text-decoration-color: {{ settings.anchor_underline_hover_color }};
+}
+
 strong {
   font-weight: 600;
 }
@@ -93,7 +107,7 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
-h1,  {
+h1 {
   font-size: 2.5rem;
 }
 

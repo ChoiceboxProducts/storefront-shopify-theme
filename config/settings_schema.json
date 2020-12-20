@@ -41,6 +41,30 @@
                 "id": "primary_accent_color",
                 "label": "Primary Accent Color",
                 "default": "#ff7144"
+            },
+            {
+                "type": "color",
+                "id": "anchor_color",
+                "label": "Link Color",
+                "default": "#3f94de"
+            },
+            {
+                "type": "color",
+                "id": "anchor_hover_color",
+                "label": "Link Color (Hover)",
+                "default": "rgba(37, 94, 144, 1)"
+            },
+            {
+                "type": "color",
+                "id": "anchor_underline_color",
+                "label": "Link Underline Color",
+                "default": "rgba(63, 148, 222, 0.2)"
+            },
+            {
+                "type": "color",
+                "id": "anchor_underline_hover_color",
+                "label": "Link Underline Color (Hover)",
+                "default": "rgba(37, 94, 144, 0.8)"
             }
         ]
     },
