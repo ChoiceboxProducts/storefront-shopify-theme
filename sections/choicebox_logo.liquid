@@ -3,17 +3,22 @@
     .svg-{{ section.id }} {
       width: calc({{ section.settings.width }}px * {{ section.settings.scale }});
       height: calc({{ section.settings.height }}px * {{ section.settings.scale }});
+      fill: {{ section.settings.fill_color }}
+    }
+
+    .svg-{{ section.id }} .accent {
+      fill: {{ section.settings.accent_color }}
     }
   </style>
 
-  <svg class="svg-{{ section.id }}" xmlns="http://www.w3.org/2000/svg" fill="{{ section.settings.fill_color }}" width="{{ section.settings.width }}" height="{{ section.settings.height }}" viewbox="0 0 {{ section.settings.width }} {{ section.settings.height}}">
+  <svg class="svg-{{ section.id }}" xmlns="http://www.w3.org/2000/svg" width="{{ section.settings.width }}" height="{{ section.settings.height }}" viewbox="0 0 {{ section.settings.width }} {{ section.settings.height}}">
     {{ section.settings.svg_content }}
   </svg>
 {% endif %}
 
 {% schema %}
   {
-    "name": "Vector Image",
+    "name": "Choicebox Logo",
     "settings": [
       {
         "type": "html",
@@ -24,6 +29,12 @@
         "type": "color",
         "id": "fill_color",
         "label": "Fill Color",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "accent_color",
+        "label": "Accent Color",
         "default": "#000"
       },
       {
@@ -46,7 +57,7 @@
       }
     ],
     "presets": [{
-      "name": "Vector Image",
+      "name": "Choicebox Logo",
       "category": "Images"
     }]
   }
