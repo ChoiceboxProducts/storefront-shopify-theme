@@ -1,5 +1,11 @@
-{% if section.settings.active %}
 <header class="page-header">
+  {% if settings.site_logo != blank %}
+    {% if request.page_type == 'index' %}
+      {{ settings.site_logo }}
+    {% else %}
+      <a href="/">{{ settings.site_logo }}</a>
+    {% endif %}
+  {% endif %}
   {% for link in linklists.main-menu.links %}
     {% assign child_list_handle = link.title | handleize %}
     {% if linklists[child_list_handle].links != blank %}
@@ -12,7 +18,11 @@
     {% endif %}
   {% endfor %}
 
-  <a href="/cart">{{ 'general.navigation.cart' | t }}</a>
+  {% if settings.pause_sales != true %}
+    {% if request.page_type != 'cart' %}
+      <a href="/cart">{{ 'general.navigation.cart' | t }}</a>
+    {% endif %}
+  {% endif %}
 
   {% if shop.customer_accounts_enabled %}
     {% if customer %}
@@ -24,19 +34,10 @@
     {% endif %}
   {% endif %}
 </header>
-{% endif %}
 
 {% schema %}
   {
     "name": "Header",
-    "settings": [
-      {
-        "type": "checkbox",
-        "id": "active",
-        "label": "Active",
-        "default": true
-      }
-    ],
     "presets": [{
         "name": "Header",
         "category": "Page Layout"

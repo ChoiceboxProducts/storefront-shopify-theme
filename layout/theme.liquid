@@ -18,7 +18,9 @@
   </head>
   <body class="{{ template.name }}">
     <div class="page">
-      {% section 'header' %}
+      {% if request.page_type != 'index' %}
+        {% section 'header' %}
+      {% endif %}
       <main>
         {{ content_for_layout }}
       </main>

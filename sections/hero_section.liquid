@@ -1,0 +1,73 @@
+<style>
+  .hero-{{ section.id }} {
+    font-size: {{ section.settings.font_size }};
+    line-height: 1.5;
+    margin-bottom: 7rem;
+  }
+
+  .hero-{{ section.id }} p {
+    margin: {{ section.settings.margin }};
+    letter-spacing: -0.02rem;
+    font-family: {% case section.settings.font %}
+      {% when 'display' %}
+        {{ settings.display_font }}
+      {% when 'copy' %}
+        {{ settings.copy_font }}
+      {% endcase %}, sans-serif;
+  }
+</style>
+
+<section class="hero hero-{{ section.id }}">
+  {% if settings.site_logo != blank and section.settings.show_site_logo == true %}
+    {{ settings.site_logo }}
+  {% endif %}
+
+  {% if section.settings.message != blank %}
+    {{ section.settings.message }}
+  {% endif %}
+</section>
+
+{% schema %}
+  {
+    "name": "Hero",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_site_logo",
+        "label": "Show Site Logo",
+        "default": true
+      },
+      {
+        "type": "richtext",
+        "id": "message",
+        "label": "Message"
+      },
+      {
+        "type": "text",
+        "id": "font_size",
+        "label": "Font Size",
+        "default": "1.8rem"
+      },
+      {
+        "type": "text",
+        "id": "margin",
+        "label": "Margin",
+        "default": "0"
+      },
+      {
+        "type": "select",
+        "id": "font",
+        "label": "Font",
+        "options": [
+          { "value": "display", "label": "Display" },
+          { "value": "copy", "label": "Copy" }
+        ],
+        "default": "display"
+      }
+    ],
+    "presets": [{
+        "name": "Hero",
+        "category": "Page Layout"
+    }]
+  }
+{% endschema %}
