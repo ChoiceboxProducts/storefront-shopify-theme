@@ -1,6 +1,10 @@
 <style>
+  .newsletter-{{ section.id }} .email-field {
+    display: flex;
+  }
+
   .newsletter-{{ section.id }} input[type="email"] {
-    width: 30rem;
+    flex: 1 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     font-weight: 500;
@@ -27,6 +31,16 @@
     margin-top: 0;
     margin-bottom: 2rem;
   }
+
+  .newsletter-{{ section.id }} .confirmation-message {
+    background-color: #64B225;
+    border-radius: 4px;
+    color: #ffffff;
+    font-weight: 500;
+    margin-top: 1rem;
+    padding: 1rem 1.5rem;
+  }
+
 </style>
 
 <section class="newsletter-{{ section.id }}">
@@ -34,29 +48,32 @@
     {% comment %}TODO: No way to dynamically adjust header-level :({% endcomment %}
     <h1>{{ section.settings.heading | t }}</h1>
   {% endif %}
-  {% if section.settings.hook != blank %}
-    <p>{{ section.settings.hook | t }}</p>
-  {% endif %}
 
   {% form 'customer' %}
+    {% if section.settings.hook != blank and form.posted_successfully? == false %}
+      <p>{{ section.settings.hook | t }}</p>
+    {% endif %}
     {{ form.errors | default_errors }}
     {% if form.posted_successfully? %}
-      <p>{{ section.settings.confirmation_message | t }}</p>
+      <p class="confirmation-message">{{ section.settings.confirmation_message | t }}</p>
     {% else %}
-      <input type="hidden" name="contact[tags]" value="{{ section.settings.tag }}">
-      <input type="email"
-        name="contact[email]"
-        id="Email"
-        value="{% if customer.email != blank %}{{ customer.email }}{% endif %}"
-        placeholder="{{ section.settings.placeholder | t }}"
-        autocorrect="off"
-        autocapitalize="off"><!-- Dirty whitespace hack
-        --><button type="submit" name="commit" id="Subscribe">
-        {% assign submit_button = section.settings.submit_button | t %}
-        {% if submit_button != blank %}
-          <span>{{ section.settings.submit_button | t }}</span>
-        {% endif %}
-      </button>
+      <input type="hidden" name="contact[tags]" value="{{ section.settings.tag }}" />
+      <div class="email-field">
+        <input type="email"
+          name="contact[email]"
+          id="Email"
+          value="{% if customer.email != blank %}{{ customer.email }}{% endif %}"
+          placeholder="{{ section.settings.placeholder | t }}"
+          autocorrect="off"
+          autocapitalize="off"
+          required="required" /><!-- Dirty whitespace hack
+    --><button type="submit" name="commit" id="Subscribe">
+          {% assign submit_button = section.settings.submit_button | t %}
+          {% if submit_button != blank %}
+            <span>{{ section.settings.submit_button | t }}</span>
+          {% endif %}
+        </button>
+      </div>
     {% endif %}
   {% endform %}
 </section>

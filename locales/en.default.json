@@ -9,7 +9,7 @@
             "subtext_html": "The page you were looking for does not exist"
         },
         "coming_soon": {
-            "thanks": "Thanks! Look out for an email soon.",
+            "thanks": "Thanks for your interest! Look out for an email soon.",
             "submit": "Let me know",
             "placeholder": "Your email address",
             "hook": "Enter your email address to receive a one-time notification when we launch.",
@@ -25,7 +25,7 @@
         },
         "store_name": "Choicebox",
         "footer": {
-            "privacy_message": "We never sell your personal information. We like you too much :)"
+            "privacy_message": "We never sell your personal information, we like you too much :)"
         }
     }
 }
