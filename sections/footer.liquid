@@ -32,7 +32,9 @@
       {% if linklists.footer.links != blank %}
         <ul class="links">
           {% for link in linklists.footer.links %}
-            <li><a href="{{ link.url }}">{{ link.title | t }}</a></li>
+            {% if link.url != request.path %}
+              <li><a href="{{ link.url }}">{{ link.title | t }}</a></li>
+            {% endif %}
           {% endfor %}
         </ul>
       {% endif %}
