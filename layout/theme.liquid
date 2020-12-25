@@ -12,15 +12,17 @@
     <meta name="description" content="{{ page_description | escape }}" />
     <link rel="canonical" href="{{ canonical_url }}" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    {{ content_for_header }} <!-- Header hook for plugins -->
-    {{ 'application.css' | asset_url | stylesheet_tag }}
-    {{ 'application.js' | asset_url | script_tag }}
+    <link href="data:image/svg+xml,{{ settings.favicon_svg | url_escape }}" rel="icon" type="image/svg+xml"> {{ content_for_header }}
+    <!-- Header hook for plugins -->
+    {{ 'global.css' | asset_url | stylesheet_tag }}
+    {{ 'main.js' | asset_url | script_tag }}
   </head>
   {% if template.name != blank %}
     {% assign body_class = template.name %}
   {% else %}
     {% assign body_class = request.path | handleize %}
   {% endif %}
+
   <body class="{{ body_class }}">
     <div class="page">
       {% if request.page_type != 'index' %}

@@ -1,0 +1,2 @@
+<!-- This asset is not used to render, but included here to have the SVG in version control. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" fill="none"><path fill="#64B225" d="M0 100C0 19 19 0 100 0s100 19 100 100-19 100-100 100S0 181 0 100z"/><path fill="#fff" d="M170 21c46 4 26 6 26 6s-18 7-47 65l-8 16c-8 17-15 32-25 40-5 4-13 9-26 9-22 0-32-16-41-39-9-24-23-37-23-37s10-6 25-5c23 1 33 24 41 43l1 2c9-11 16-26 24-42 14-30 28-60 53-58z"/></svg>

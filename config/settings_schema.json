@@ -1,5 +1,4 @@
-[
-    {
+[{
         "name": "Colors",
         "settings": [{
                 "type": "color",
@@ -76,7 +75,7 @@
             {
                 "type": "color",
                 "id": "logo_accent_color",
-                "label": "Link Color (Accent)",
+                "label": "Logo Color (Accent)",
                 "default": "rgba(37, 94, 144, 0.8)"
             }
         ]
@@ -116,16 +115,21 @@
     {
         "name": "General",
         "settings": [{
-                "type": "html",
-                "id": "site_logo",
-                "label": "Site logo"
-            },
-            {
                 "type": "checkbox",
                 "id": "pause_sales",
                 "label": "Pause Sales (Maintenance Mode)",
                 "info": "Warning: this will prevent customers from viewing products, checking out, or otherwise completely a sale. Only check this box if you know what you're doing!",
                 "default": false
+            },
+            {
+                "type": "html",
+                "id": "site_logo",
+                "label": "Site logo"
+            },
+            {
+                "type": "html",
+                "id": "favicon_svg",
+                "label": "Favicon (SVG)"
             }
         ]
     },
