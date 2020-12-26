@@ -1,9 +1,16 @@
+<style>
+  .page-header .logo {
+    max-width: 265px;
+    width: 100%;
+  }
+</style>
+
 <header class="page-header">
   {% if settings.site_logo != blank %}
     {% if request.page_type == 'index' %}
       {{ settings.site_logo }}
     {% else %}
-      <a href="/">{{ settings.site_logo }}</a>
+      <a href="/" class="logo">{{ settings.site_logo }}</a>
     {% endif %}
   {% endif %}
   {% for link in linklists.main-menu.links %}
