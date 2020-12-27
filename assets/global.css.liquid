@@ -54,6 +54,7 @@
   --negative-accent-color: {{ settings.negative_color }};
   --primary-accent-color: {{ settings.primary_accent_color }};
   --page-horizontal-padding: 10%;
+  --input-border-radius: 4px;
 }
 
 /* General */
@@ -142,7 +143,7 @@ button {
   font-size: inherit;
   border: 0;
   padding: 1.1rem 1.2rem 0.9rem;
-  border-radius: 4px;
+  border-radius: var(--input-border-radius);
   color: inherit;
 }
 
@@ -288,7 +289,7 @@ body {
 
 main {
   flex: 1 0;
-  margin-top: 3rem;
+  margin-top: calc(var(--max-margin-top) * 1rem);
 }
 
 main,
@@ -301,7 +302,26 @@ main,
 /* Front page */
 
 .index main {
-  margin-top: 10rem;
+  --max-margin-top: 10;  /* rem */
+  --min-margin-top: 2;  /* rem */
+  --margin-top-delta: calc(var(--max-margin-top) - var(--min-margin-top));
+  --transition-start-width: 46; /* rem */
+  --transition-end-width: 30; /* rem */
+  --transition-width-delta: calc(var(--transition-start-width) - var(--transition-end-width));
+}
+
+/* NOTE: Cannot use CSS custom properties in media queries */
+@media (max-width: 46rem) {
+  .index main {
+    margin-top: calc((var(--max-margin-top) * 1rem) - ((((var(--transition-start-width) * 1rem) - 100vw) / var(--transition-width-delta)) * var(--margin-top-delta)));
+  }
+}
+
+/* NOTE: Cannot use CSS custom properties in media queries */
+@media (max-width: 30rem) {
+  .index main {
+    margin-top: calc(var(--min-margin-top) * 1rem);
+  }
 }
 
 /* Logo */

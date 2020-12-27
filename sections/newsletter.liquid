@@ -1,9 +1,9 @@
 <style>
-  .newsletter-{{ section.id }} .email-field {
+  .newsletter .email-field {
     display: flex;
   }
 
-  .newsletter-{{ section.id }} input[type="email"] {
+  .newsletter input[type="email"] {
     flex: 1 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -12,27 +12,47 @@
 
   .newsletter-{{ section.id }} button {
     background-color: {{ settings.primary_accent_color }};
+  }
+
+  .newsletter button {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     color: #fff;
   }
 
-  .newsletter-{{ section.id }} input[type="email"],
-  .newsletter-{{ section.id }} button {
+  @media (max-width: 46rem) {
+    .newsletter .email-field {
+      display: block;
+    }
+
+    .newsletter button,
+    .newsletter input[type="email"] {
+      border-radius: var(--input-border-radius);
+      display: block;
+      width: 100%;
+    }
+
+    .newsletter input[type="email"] + button {
+      margin-top: 1rem;
+    }
+  }
+
+  .newsletter input[type="email"],
+  .newsletter button {
     font-size: 1.375rem;
     height: 4rem;
   }
 
-  .newsletter-{{ section.id }} h1 {
+  .newsletter h1 {
     color: var(--positive-accent-color);
   }
 
-  .newsletter-{{ section.id }} p {
+  .newsletter p {
     margin-top: 0;
     margin-bottom: 2rem;
   }
 
-  .newsletter-{{ section.id }} .confirmation-message {
+  .newsletter .confirmation-message {
     background-color: #64B225;
     border-radius: 4px;
     color: #ffffff;
@@ -43,7 +63,7 @@
 
 </style>
 
-<section class="newsletter-{{ section.id }}">
+<section class="newsletter newsletter-{{ section.id }}">
   {% if section.settings.heading != blank %}
     {% comment %}TODO: No way to dynamically adjust header-level :({% endcomment %}
     <h1>{{ section.settings.heading | t }}</h1>
