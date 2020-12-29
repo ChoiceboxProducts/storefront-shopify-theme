@@ -2,6 +2,13 @@
   .hero-{{ section.id }} {
     font-size: {{ section.settings.font_size }};
     line-height: 1.5;
+    transition: font-size 200ms;
+  }
+
+  @media (max-width: 46rem) {
+    .hero-{{ section.id }} {
+      font-size: 1.3rem;
+    }
   }
 
   .hero-{{ section.id }} p {
@@ -16,7 +23,7 @@
   }
 
   .hero svg {
-    max-width: 100%;
+    max-width: 60%;
   }
 </style>
 

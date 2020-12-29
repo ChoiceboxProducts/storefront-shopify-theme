@@ -104,7 +104,7 @@ strong {
 }
 
 small {
-  font-size: 0.9375rem;
+  font-size: 0.8em;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -117,6 +117,12 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: 2.5rem;
   margin-top: 3rem;
+}
+
+@media (max-width: 46rem) {
+  h1 {
+    font-size: 2rem;
+  }
 }
 
 h2 {
@@ -215,15 +221,22 @@ a[href^="mailto"] {
 }
 
 form .errors {
-  background-color: var(--negative-accent-color);
   border-radius: 4px;
-  color: #fff;
-  padding: 1rem 2.4rem;
+  color: var(--negative-accent-color);
+  padding: 1rem 2.3rem;
   margin-bottom: 1rem;
+  border: 3px solid var(--negative-accent-color);
+  font-weight: 600;
 }
 
 form .errors ul {
   margin: 0;
+}
+
+@media (max-width: 46rem) {
+  form .errors {
+    padding: 1rem 2rem;
+  }
 }
 
 /* Change Autocomplete styles in Chrome */
@@ -270,12 +283,31 @@ body {
   line-height: 1.5;
 }
 
+@media (max-width: 46rem) {
+  :root {
+    --page-horizontal-padding: 6%;
+    --page-border-width: 0;
+  }
+
+  body {
+    font-size: 1rem;
+    overflow: auto;
+    min-height: 100%;
+  }
+
+  .page {
+    height: auto;
+    min-height: 100%;
+  }
+}
+
 .page {
   display: flex;
   flex-direction: column;
   height: 100%;
   overflow-y: auto;
   padding: 0 var(--page-horizontal-padding);
+  transition: padding 200ms;
 }
 
 .page-header {
@@ -301,24 +333,27 @@ main,
 
 /* Front page */
 
+.challenge main,
 .index main {
-  --max-margin-top: 10;  /* rem */
+  --max-margin-top: 10; /* rem */
   --min-margin-top: 2;  /* rem */
   --margin-top-delta: calc(var(--max-margin-top) - var(--min-margin-top));
-  --transition-start-width: 46; /* rem */
-  --transition-end-width: 30; /* rem */
+  --transition-start-width: 46; /* rem, NOTE: remember to change media queries below when changing this value */
+  --transition-end-width: 26;   /* rem, NOTE: remember to change media queries below when changing this value */
   --transition-width-delta: calc(var(--transition-start-width) - var(--transition-end-width));
 }
 
 /* NOTE: Cannot use CSS custom properties in media queries */
 @media (max-width: 46rem) {
+  .challenge main,
   .index main {
     margin-top: calc((var(--max-margin-top) * 1rem) - ((((var(--transition-start-width) * 1rem) - 100vw) / var(--transition-width-delta)) * var(--margin-top-delta)));
   }
 }
 
 /* NOTE: Cannot use CSS custom properties in media queries */
-@media (max-width: 30rem) {
+@media (max-width: 26rem) {
+  .challenge main,
   .index main {
     margin-top: calc(var(--min-margin-top) * 1rem);
   }
