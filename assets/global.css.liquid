@@ -202,6 +202,16 @@ p {
   margin-top: 0;
 }
 
+@media (max-width: 46rem) {
+  p {
+    margin-right: -0.3rem;
+  }
+
+  a {
+    overflow-wrap: break-word;
+  }
+}
+
 .visually-hidden {
   clip: rect(1px, 1px, 1px, 1px);
   clip-path: inset(50%);
@@ -456,7 +466,7 @@ main,
     width: 100%;
   }
 }
-
+ 
 @media (max-width: 46rem) {
   .shopify-policy__body > div > p:first-of-type {
     font-size: 1.2em;
