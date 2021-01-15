@@ -13,19 +13,20 @@
       <a href="/" class="logo">{{ settings.site_logo }}</a>
     {% endif %}
   {% endif %}
-  {% for link in linklists.main-menu.links %}
-    {% assign child_list_handle = link.title | handleize %}
-    {% if linklists[child_list_handle].links != blank %}
-      <a href="{{ link.url }}">{{ link.title | t }}</a>
-      [{% for childlink in linklists[child_list_handle].links %}
-        <a href="{{ childlink.url }}">{{ childlink.title | t }}</a>
-      {% endfor %}]
-    {% else %}
-      <a href="{{ link.url }}">{{ link.title | t }}</a>
-    {% endif %}
-  {% endfor %}
 
   {% if settings.pause_sales != true %}
+    {% for link in linklists.main-menu.links %}
+      {% assign child_list_handle = link.title | handleize %}
+      {% if linklists[child_list_handle].links != blank %}
+        <a href="{{ link.url }}">{{ link.title | t }}</a>
+        [{% for childlink in linklists[child_list_handle].links %}
+          <a href="{{ childlink.url }}">{{ childlink.title | t }}</a>
+        {% endfor %}]
+      {% else %}
+        <a href="{{ link.url }}">{{ link.title | t }}</a>
+      {% endif %}
+    {% endfor %}
+
     {% if request.page_type != 'cart' %}
       <a href="/cart">{{ 'general.navigation.cart' | t }}</a>
     {% endif %}
