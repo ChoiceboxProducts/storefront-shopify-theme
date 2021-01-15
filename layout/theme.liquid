@@ -25,10 +25,8 @@
   {% endif %}
 
   <body class="{{ body_class }}">
-    <div class="page">
-      {% if request.page_type != 'index' %}
-        {% section 'header' %}
-      {% endif %}
+    <div class="content">
+      {% section 'header' %}
       <main>
         {{ content_for_layout }}
       </main>

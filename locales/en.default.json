@@ -21,7 +21,9 @@
             "catalog": "Catalog",
             "home": "Home",
             "privacy_policy": "Privacy Policy",
-            "terms_and_conditions": "Terms &amp; Conditions"
+            "terms_and_conditions": "Terms &amp; Conditions",
+            "shop": "Shop",
+            "about": "About"
         },
         "store_name": "Choicebox",
         "footer": {

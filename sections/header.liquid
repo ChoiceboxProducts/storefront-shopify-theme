@@ -1,7 +1,35 @@
 <style>
+  .page-header {
+    align-items: baseline;
+    display: flex;
+    flex: 0 0;
+    justify-content: space-between;
+    margin-top: 4rem;
+  }
+
   .page-header .logo {
-    max-width: 265px;
+    max-width: 362px;
     width: 100%;
+  }
+
+  .top-level ul {
+    display: flex;
+    font-family: {{ settings.display_font }};
+    font-weight: 900;
+    list-style: none;
+  }
+
+  .top-level a:link,
+  .top-level a:visited {
+    text-decoration: none;
+  }
+
+  .top-level a {
+    padding: 1rem;
+  }
+
+  .top-level a:hover span {
+    text-decoration: underline;
   }
 </style>
 
@@ -15,20 +43,29 @@
   {% endif %}
 
   {% if settings.pause_sales != true %}
-    {% for link in linklists.main-menu.links %}
-      {% assign child_list_handle = link.title | handleize %}
-      {% if linklists[child_list_handle].links != blank %}
-        <a href="{{ link.url }}">{{ link.title | t }}</a>
-        [{% for childlink in linklists[child_list_handle].links %}
-          <a href="{{ childlink.url }}">{{ childlink.title | t }}</a>
-        {% endfor %}]
-      {% else %}
-        <a href="{{ link.url }}">{{ link.title | t }}</a>
-      {% endif %}
-    {% endfor %}
+    {% if linklists.main-menu.links != blank or request.page_type != 'cart' %}
+      <nav class="top-level">
+        <ul>
+          {% for link in linklists.main-menu.links %}
+            {% assign child_list_handle = link.title | handleize %}
+            <li>
+              {% if linklists[child_list_handle].links != blank %}
+                <a href="{{ link.url }}"><span>{{ link.title | t }}</span></a>
+                {% comment %} TODO: Support submenus {% endcomment %}
+                [{% for childlink in linklists[child_list_handle].links %}
+                  <a href="{{ childlink.url }}">{{ childlink.title | t }}</a>
+                {% endfor %}]
+              {% else %}
+                <a href="{{ link.url }}"><span>{{ link.title | t }}</span></a>
+              {% endif %}
+            </li>
+          {% endfor %}
 
-    {% if request.page_type != 'cart' %}
-      <a href="/cart">{{ 'general.navigation.cart' | t }}</a>
+          {% if request.page_type != 'cart' %}
+            <li><a href="/cart"><span>{{ 'general.navigation.cart' | t }}</span></a></li>
+          {% endif %}
+        </ul>
+      </nav>
     {% endif %}
   {% endif %}
 

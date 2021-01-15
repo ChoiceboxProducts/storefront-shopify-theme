@@ -319,13 +319,13 @@ body {
     min-height: 100%;
   }
 
-  .page {
+  .content {
     height: auto;
     min-height: 100%;
   }
 }
 
-.page {
+.content {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -334,22 +334,13 @@ body {
   transition: padding 200ms;
 }
 
-.page-header {
-  margin-top: 2rem;
-  flex: 0 0;
-}
-
-.page-footer {
-  flex: 0 0;
-}
-
 main {
   flex: 1 0;
   margin-top: calc(var(--max-margin-top) * 1rem);
 }
 
 main,
-.page > .shopify-section {
+.content > .shopify-section {
   max-width: var(--page-content-max-width);
   align-self: center;
   width: 100%;

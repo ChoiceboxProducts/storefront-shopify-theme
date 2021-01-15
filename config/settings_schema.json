@@ -10,7 +10,7 @@
                 "type": "color",
                 "id": "page_background_color",
                 "label": "Page background color",
-                "default": "#eef9ff"
+                "default": "#def3ff"
             },
             {
                 "type": "color",
@@ -70,13 +70,13 @@
                 "type": "color",
                 "id": "logo_primary_color",
                 "label": "Logo Color (Primary)",
-                "default": "rgba(63, 148, 222, 0.2)"
+                "default": "#223b60"
             },
             {
                 "type": "color",
                 "id": "logo_accent_color",
                 "label": "Logo Color (Accent)",
-                "default": "rgba(37, 94, 144, 0.8)"
+                "default": "#64b225"
             }
         ]
     },
