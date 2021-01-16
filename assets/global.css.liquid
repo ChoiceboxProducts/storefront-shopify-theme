@@ -138,6 +138,7 @@ h2 + h3 {
   margin-top: 1rem;
 }
 
+.button,
 input,
 select,
 textarea,
@@ -158,6 +159,8 @@ input::placeholder {
   opacity: 0.5;
 }
 
+.button:link,
+.button:visited,
 button,
 input[type="button"],
 input[type="submit"],
@@ -169,8 +172,10 @@ input[type="reset"] {
   font-family: {{ settings.display_font }}, sans-serif;
   vertical-align: bottom;
   white-space: nowrap;
+  text-decoration: none;
 }
 
+.call-to-action,
 button[type="submit"],
 input[type="submit"] {
   background-image: url("data:image/svg+xml,%3Csvg width='29' height='25' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M27.5 12.5h-26M17.4 2.4l10.1 10.1L17.4 2.4zm10.1 10.1L17.4 22.6l10.1-10.1z' stroke='%23fff' stroke-width='2.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -179,12 +184,41 @@ input[type="submit"] {
   padding-right: 3rem;
 }
 
+.call-to-action,
 input[type="submit"] {
   padding-right: 4rem;
 }
 
 button[type="submit"] > span {
   padding-right: 1rem;
+}
+
+input.unified {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+input + button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+@media (max-width: 46rem) {
+  button,
+  input {
+    border-radius: var(--input-border-radius);
+    display: block;
+    width: 100%;
+  }
+
+  input.unified {
+    border-radius: var(--input-border-radius);
+  }
+
+  input + button {
+    border-radius: var(--input-border-radius);
+    margin-top: 1rem;
+  }
 }
 
 ul {

@@ -1,4 +1,9 @@
 <style>
+  .hero h1 {
+    font-size: 3.4375rem;
+    color: var(--positive-accent-color);
+  }
+
   .hero-{{ section.id }} {
     font-size: {{ section.settings.font_size }};
     line-height: 1.5;
@@ -16,10 +21,26 @@
     letter-spacing: -0.02rem;
     font-family: {% case section.settings.font %}
       {% when 'display' %}
-        {{ settings.display_font }}
+        {{ settings.display_font }},
       {% when 'copy' %}
-        {{ settings.copy_font }}
-      {% endcase %}, sans-serif;
+        {{ settings.copy_font }},
+      {% endcase %} sans-serif;
+  }
+
+  .hero .hook {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .hero .call-to-action {
+    {% if section.settings.call_to_action_background_color != blank %}
+      background-color: {{ section.settings.call_to_action_background_color }};
+    {% endif %}
+    {% if section.settings.call_to_action_color != blank %}
+      color: {{ section.settings.call_to_action_color }};
+    {% endif %}
+    white-space: nowrap;
+    margin-left: 5rem;
   }
 
   .hero svg {
@@ -32,8 +53,17 @@
     {{ settings.site_logo }}
   {% endif %}
 
-  {% if section.settings.message != blank %}
-    {{ section.settings.message }}
+  {% if section.settings.tagline != blank %}
+    <h1>{{ section.settings.tagline | t }}</h1>
+  {% endif %}
+
+  {% if section.settings.hook != blank %}
+    <div class="hook">
+      {{ section.settings.hook }}
+      {% if section.settings.call_to_action != blank and section.settings.call_to_action_url != blank %}
+        <a class="button call-to-action" href="{{ section.settings.call_to_action_url }}">{{ section.settings.call_to_action | t }}</a>
+      {% endif %}
+    </div>
   {% endif %}
 </section>
 
@@ -48,9 +78,14 @@
         "default": true
       },
       {
+        "type": "text",
+        "id": "tagline",
+        "label": "Tagline"
+      },
+      {
         "type": "richtext",
-        "id": "message",
-        "label": "Message"
+        "id": "hook",
+        "label": "Hook"
       },
       {
         "type": "text",
@@ -63,6 +98,16 @@
         "id": "margin",
         "label": "Margin",
         "default": "0"
+      },
+      {
+        "type": "text",
+        "id": "call_to_action",
+        "label": "Call to Action"
+      },
+      {
+        "type": "url",
+        "id": "call_to_action_url",
+        "label": "Call to Action URL"
       },
       {
         "type": "select",

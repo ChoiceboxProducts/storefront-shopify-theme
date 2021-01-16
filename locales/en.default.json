@@ -28,6 +28,10 @@
         "store_name": "Choicebox",
         "footer": {
             "privacy_message": "We never sell your personal information, we like you too much :)"
+        },
+        "hero": {
+            "call_to_action": "Get Choosing",
+            "tagline": "Choice. Boxed."
         }
     }
 }

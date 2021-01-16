@@ -5,19 +5,11 @@
 
   .newsletter input[type="email"] {
     flex: 1 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
     font-weight: 500;
   }
 
   .newsletter-{{ section.id }} button {
     background-color: {{ settings.primary_accent_color }};
-  }
-
-  .newsletter button {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    color: #fff;
   }
 
   @media (max-width: 46rem) {
@@ -27,17 +19,6 @@
 
     .newsletter .email-field {
       display: block;
-    }
-
-    .newsletter button,
-    .newsletter input[type="email"] {
-      border-radius: var(--input-border-radius);
-      display: block;
-      width: 100%;
-    }
-
-    .newsletter input[type="email"] + button {
-      margin-top: 1rem;
     }
   }
 
@@ -84,7 +65,8 @@
     {% else %}
       <input type="hidden" name="contact[tags]" value="{{ section.settings.tag }}" />
       <div class="email-field">
-        <input type="email"
+        <input class="unified"
+          type="email"
           name="contact[email]"
           id="Email"
           value="{% if customer.email != blank %}{{ customer.email }}{% endif %}"
