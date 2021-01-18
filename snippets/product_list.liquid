@@ -1,0 +1,44 @@
+{% comment %}
+  Parameters:
+  - collection_handle: product collection handle to iterate over
+  - class_name: "product-list product-list-{{ section.id }}"
+  - is_ordered: indicates if the product listing is ordered in some way
+  - title: display title for product list
+  - section_id: section id
+{% endcomment %}
+
+{% if collections[collection_handle] != empty %}
+  <section class="products
+    {% if class_name != blank %}
+      {{ class_name }}
+      {% if section_id != blank %}
+        collection-{{ section_id }}
+      {% endif %}
+    {% endif %}">
+
+    {% if title != blank %}
+      <h2>{{ title }}</h2>
+    {% endif %}
+
+    {% if is_ordered == true %}
+      {% assign list_tag_name = "ol" %}
+    {% else %}
+      {% assign list_tag_name = "ul" %}
+    {% endif %}
+
+    <{{ list_tag_name }} class="collection">
+      {% for product in collections[collection_handle].products %}
+        <li>
+          <a href="{{ product.url }}">
+            <figure>
+              <img src="{{ product.featured_image | img_url: '288x288' }}" alt="{{ product.title }}" />
+              <figcaption>
+                <span class="product-title">{{ product.title }}</span>
+              </figcaption>
+            </figure>
+          </a>
+        </li>
+      {% endfor %}
+    </{{ list_tag_name }}>
+  </section>
+{% endif %}

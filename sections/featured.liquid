@@ -1,0 +1,70 @@
+<style>
+  .featured .collection{
+    padding: 0;
+    list-style: none;
+  }
+
+  .featured .collection figure {
+    margin: 0;
+  }
+
+  .featured .collection figure img {
+    border-radius: 4px;
+    width: 100%;
+  }
+
+  .featured .collection {
+    display: flex;
+  }
+
+  .featured .collection li {
+    flex: 1 0;
+  }
+
+  .featured .collection li + li {
+    margin-left: 1rem;
+  }
+</style>
+
+{% if section.settings.collection_handle != blank %}
+  {%
+    render 'product_list',
+    collection_handle: section.settings.collection_handle,
+    title: "Featured",
+    section_id: section.id,
+    class_name: "featured"
+  %}
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Product List",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "collection_handle",
+        "label": "Collection",
+        "info": "Specifiy the collection handle found in the Shopify admin page."
+      },
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "Layout",
+        "options": [
+          { "value": "grid", "label": "Grid" },
+          { "value": "list", "label": "List" }
+        ],
+        "default": "grid"
+      }
+    ],
+    "presets": [{
+        "name": "Product List",
+        "category": "Page Layout"
+    }]
+  }
+{% endschema %}
