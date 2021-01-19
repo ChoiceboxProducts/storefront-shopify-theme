@@ -8,6 +8,16 @@
     url({{ 'spartan-v2-latin-500.woff' | asset_url }}) format('woff');
 }
 
+/* Spartan-600 - latin */
+@font-face {
+    font-family: 'Spartan';
+    font-style: normal;
+    font-weight: 600;
+    src: local(''),
+    url({{ 'spartan-v2-latin-600.woff2' | asset_url }}) format('woff2'),
+    url({{ 'spartan-v2-latin-600.woff' | asset_url }}) format('woff');
+}
+
 /* Spartan-700 - latin */
 @font-face {
     font-family: 'Spartan';
@@ -54,7 +64,7 @@
   --negative-accent-color: {{ settings.negative_color }};
   --primary-accent-color: {{ settings.primary_accent_color }};
   --page-horizontal-padding: 10%;
-  --input-border-radius: 4px;
+  --input-border-radius: 100rem;  /* Such a large value creates a rectangle with a constant radius corner */
 }
 
 /* General */
@@ -149,7 +159,7 @@ button {
   font-family: inherit;
   font-size: inherit;
   border: 0;
-  padding: 1.1rem 1.2rem 0.9rem;
+  padding: 1.1rem 1.6rem 0.9rem;
   border-radius: var(--input-border-radius);
   color: inherit;
 }
@@ -180,7 +190,7 @@ button[type="submit"],
 input[type="submit"] {
   background-image: url("data:image/svg+xml,%3Csvg width='29' height='25' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M27.5 12.5h-26M17.4 2.4l10.1 10.1L17.4 2.4zm10.1 10.1L17.4 22.6l10.1-10.1z' stroke='%23fff' stroke-width='2.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: calc(100% - 20px) 50%;
+  background-position: calc(100% - 1.5rem) 50%;
   padding-right: 3rem;
 }
 
