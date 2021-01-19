@@ -274,6 +274,7 @@ p {
   }
 }
 
+.no-break,
 a[href^="mailto"] {
   white-space: nowrap;
 }
@@ -309,6 +310,14 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
   -webkit-text-fill-color: var(--default-copy-color);
   -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+}
+
+/* Product Listings */
+
+a.product:link,
+a.product:visited {
+  color: var(--default-copy-color);
+  text-decoration: none;
 }
 
 /* Layout */

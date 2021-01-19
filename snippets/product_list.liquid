@@ -29,11 +29,15 @@
     <{{ list_tag_name }} class="collection">
       {% for product in collections[collection_handle].products %}
         <li>
-          <a href="{{ product.url }}">
+          <a class="product" href="{{ product.url }}">
             <figure>
-              <img src="{{ product.featured_image | img_url: '288x288' }}" alt="{{ product.title }}" />
+              <div>
+                <img src="{{ product.featured_image | img_url: '288x288' }}" alt="{{ product.title | strip_html }}" />
+                <span class="product-price">{{ product.price | money_without_trailing_zeros }}</span>
+              </div>
               <figcaption>
-                <span class="product-title">{{ product.title }}</span>
+                <p class="product-title">{{ product.title }}</p>
+                <p class="short-description">{{ product.metafields.global.short_description }}</p>
               </figcaption>
             </figure>
           </a>
