@@ -4,6 +4,12 @@
     margin: 10rem 0;
     position: relative;
     z-index: 1;
+    font-family: {% case section.settings.font %}
+      {% when 'display' %}
+        {{ settings.display_font }},
+      {% when 'copy' %}
+        {{ settings.copy_font }},
+    {% endcase %} sans-serif;
   }
 
   .content-banner-{{ section.id }} {
@@ -20,7 +26,7 @@
     left: calc(var(--horizontal-padding) * -1);
     position: absolute;
     top: calc(var(--vertical-padding) * -1);
-    transform: rotate(-1.72deg);
+    transform: translateY(-1rem) rotate(-1.72deg);
     width: calc(100% + (var(--horizontal-padding) * 2));
     z-index: -1;
   }
@@ -28,8 +34,13 @@
   .content-banner .message {
     align-items: flex-start;
     display: flex;
-    font-weight: 600;
     justify-content: space-between;
+  }
+
+  .content-banner .message p {
+    flex: 1 0;
+    font-size: 1.125rem;
+    line-height: 1.7;
   }
 
   .content-banner .call-to-action {
@@ -43,6 +54,7 @@
     {% endif %}
     white-space: nowrap;
     margin-left: 5rem;
+    min-width: 23.5%;
   }
 </style>
 
@@ -71,7 +83,7 @@
         "label": "Heading"
       },
       {
-        "type": "richtext",
+        "type": "html",
         "id": "message",
         "label": "Message"
       },
@@ -107,6 +119,16 @@
         "type": "color",
         "id": "call_to_action_border_color",
         "label": "Border Color"
+      },
+      {
+        "type": "select",
+        "id": "font",
+        "label": "Font",
+        "options": [
+          { "value": "display", "label": "Display" },
+          { "value": "copy", "label": "Copy" }
+        ],
+        "default": "display"
       }
     ],
     "presets": [{
