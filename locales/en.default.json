@@ -32,6 +32,9 @@
         "hero": {
             "call_to_action": "Get Choosing",
             "tagline": "Choice. Boxed."
+        },
+        "message_from_the_founders": {
+            "call_to_action": "Find out more"
         }
     }
 }

@@ -31,6 +31,11 @@
     align-items: flex-start;
     display: flex;
     font-weight: 600;
+    justify-content: space-between;
+  }
+
+  .hero .hook p {
+    flex: 1 0;
   }
 
   .hero .call-to-action {
@@ -42,7 +47,6 @@
     {% endif %}
     white-space: nowrap;
     margin-left: 5rem;
-    flex: 1 0 23.5%;
   }
 
   .hero svg {
@@ -62,9 +66,7 @@
   {% if section.settings.hook != blank %}
     <div class="hook">
       {{ section.settings.hook }}
-      {% if section.settings.call_to_action != blank and section.settings.call_to_action_url != blank %}
-        <a class="button call-to-action" href="{{ section.settings.call_to_action_url }}">{{ section.settings.call_to_action | t }}</a>
-      {% endif %}
+      {% include 'call_to_action' %}
     </div>
   {% endif %}
 </section>

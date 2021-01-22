@@ -1,0 +1,117 @@
+<style>
+  .content-banner {
+    color: {{ section.settings.color }};
+    margin: 10rem 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .content-banner-{{ section.id }} {
+    font-size: {{ section.settings.font_size }};
+  }
+
+  .content-banner-{{ section.id }}::before {
+    --vertical-padding: 5rem;
+    --horizontal-padding: 15rem;
+    background-color: {{ section.settings.background_color }};
+    content: "";
+    display: block;
+    height: calc(100% + (var(--vertical-padding) * 2));
+    left: calc(var(--horizontal-padding) * -1);
+    position: absolute;
+    top: calc(var(--vertical-padding) * -1);
+    transform: rotate(-1.72deg);
+    width: calc(100% + (var(--horizontal-padding) * 2));
+    z-index: -1;
+  }
+
+  .content-banner .message {
+    align-items: flex-start;
+    display: flex;
+    font-weight: 600;
+    justify-content: space-between;
+  }
+
+  .content-banner .call-to-action {
+    background-color: transparent;
+    border: 3px solid var(--positive-accent-color);
+    {% if section.settings.call_to_action_border_color != blank %}
+      border-color: {{ section.settings.call_to_action_border_color }};
+    {% endif %}
+    {% if section.settings.color != blank %}
+      color: {{ section.settings.color }};
+    {% endif %}
+    white-space: nowrap;
+    margin-left: 5rem;
+  }
+</style>
+
+{% if section.settings.message != blank %}
+  <section class="content-banner content-banner-{{ section.id }}">
+    {% if section.settings.heading != blank %}
+      <h2>{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    {% if section.settings.message != blank %}
+      <div class="message">
+        {{ section.settings.message }}
+        {% include 'call_to_action' %}
+      </div>
+    {% endif %}
+  </section>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Content Banner",
+    "settings": [
+      {
+        "type": "richtext",
+        "id": "heading",
+        "label": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "message",
+        "label": "Message"
+      },
+      {
+        "type": "text",
+        "id": "font_size",
+        "label": "Font Size",
+        "default": "1.21875rem"
+      },
+      {
+        "type": "text",
+        "id": "call_to_action",
+        "label": "Call to Action"
+      },
+      {
+        "type": "url",
+        "id": "call_to_action_url",
+        "label": "Call to Action URL"
+      },
+      {
+        "type": "color",
+        "id": "color",
+        "label": "Color",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#223b60"
+      },
+      {
+        "type": "color",
+        "id": "call_to_action_border_color",
+        "label": "Border Color"
+      }
+    ],
+    "presets": [{
+        "name": "Content Banner",
+        "category": "Page Layout"
+    }]
+  }
+{% endschema %}

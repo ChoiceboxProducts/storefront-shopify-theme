@@ -1,0 +1,3 @@
+{% if section.settings.call_to_action != blank and section.settings.call_to_action_url != blank %}
+    <a class="button call-to-action" href="{{ section.settings.call_to_action_url }}">{{ section.settings.call_to_action | t }}</a>
+{% endif %}
