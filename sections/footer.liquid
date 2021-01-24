@@ -3,8 +3,14 @@
     .page-footer {
       flex: 0 0;
       margin-bottom: 1rem;
-      margin-top: 4rem;
       line-height: 1.2;
+    }
+
+    .page-footer h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 0.6rem;
     }
 
     .page-footer ul {
@@ -24,9 +30,54 @@
     .page-footer .links li:before {
       content: "\22C5\00A0";
     }
+
+    .page-footer .link-lists {
+      display: flex;
+      margin-bottom: 5rem;
+    }
+
+    .page-footer .link-list {
+      list-style: none;
+      font-size: 1rem;
+      margin-right: 8rem;
+    }
+
+    .page-footer .link-list a {
+      display: block;
+      padding: 0.5rem 0;
+    }
+
+    .page-footer .link-list a:link,
+    .page-footer .link-list a:visited {
+      color: var(--default-copy-color);
+      text-decoration: none;
+    }
+
+    .page-footer .link-list a:hover {
+      text-decoration: underline;
+    }
   </style>
 
   <footer class="page-footer">
+    {% if section.blocks != empty %}
+      <div class="link-lists">
+        {% for block in section.blocks %}
+          {% if block.type == 'menu' %}
+            {% if linklists[block.settings.menu].links != empty %}
+              <div>
+                <h3>{{ linklists[block.settings.menu].title | t }}</h3>
+                <ul class="link-list">
+                  {% for link in linklists[block.settings.menu].links %}
+                    <li><a href="{{ link.url }}">{{ link.title | t }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
     <small>
       <span class="copyright">&copy; {{ "now" | date: "%Y" }} {{ shop.name }}.</span>
       {% if section.settings.static_text != blank %}
@@ -59,6 +110,19 @@
         "type": "text",
         "id": "static_text",
         "label": "Static Text"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "menu",
+        "name": "Menu",
+        "settings": [
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Menu"
+          }
+        ]
       }
     ],
     "presets": [{

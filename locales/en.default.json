@@ -20,10 +20,15 @@
             "cart": "Cart",
             "catalog": "Catalog",
             "home": "Home",
+            "policies": "Policies",
             "privacy_policy": "Privacy Policy",
             "terms_and_conditions": "Terms &amp; Conditions",
             "shop": "Shop",
-            "about": "About"
+            "about": "About",
+            "refund_policy": "Refund Policy",
+            "customer_support": "Customer Support",
+            "faqs": "FAQs",
+            "contact_us": "Contact Us"
         },
         "store_name": "Choicebox",
         "footer": {
