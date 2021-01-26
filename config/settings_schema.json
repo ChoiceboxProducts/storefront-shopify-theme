@@ -46,7 +46,7 @@
                 "type": "color",
                 "id": "anchor_color",
                 "label": "Link Color",
-                "default": "#3f94de"
+                "default": "#2b749e"
             },
             {
                 "type": "color",

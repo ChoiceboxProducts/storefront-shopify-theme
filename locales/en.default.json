@@ -40,6 +40,12 @@
         },
         "message_from_the_founders": {
             "call_to_action": "Find out more"
+        },
+        "products": {
+            "category": {
+                "one": "Category",
+                "other": "Categories"
+            }
         }
     }
 }

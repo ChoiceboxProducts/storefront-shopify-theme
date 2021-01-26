@@ -2,22 +2,63 @@
   <h1>{{ 'general.unavailable.heading' | t }}</h1>
   <p>{{ 'general.unavailable.message' | t }}</p>
 {% else %}
-  {% paginate collection.products by 2 %}
-    <h1>{{ collection.title }}</h1>
-    {% for product in collection.products %}
-      <div>
-        <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
-        {{ product.price | money }}
-        {% unless product.available %}<br><strong>sold out</strong>{% endunless %}
-        <a href="{{ product.url | within: collection }}">
-          <img src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
-        </a>
-      </div>
-    {% else %}
-      <p>no matches</p>
-    {% endfor %}
-    {% if paginate.pages > 1 %}
-      {{ paginate | default_pagination }}
-    {% endif %}
-  {% endpaginate %}
+  {% if collections != empty %}
+    <section class="catalog">
+      <style>
+        .catalog {
+          display: flex;
+        }
+
+        .facets {
+          width: 20rem;
+          margin-right: 2%;
+        }
+
+        .facets ul {
+          list-style: none;
+        }
+
+        .facets a:link,
+        .facets a:visited {
+          font-family: {{ settings.display_font }};
+          font-size: 1.21875rem;
+          font-weight: 700;
+          text-decoration: none;
+          display: block;
+          padding: 0.5rem 0;
+        }
+
+        .products {
+          flex: 1 0;
+        }
+      </style>
+
+      <h1 class="visually-hidden">All Products</h1>
+
+      <section class="facets">
+        <h2>{{ 'general.products.category' | t: count: 'other' }}</h2>
+        <ul>
+          {% for collection in collections %}
+            <li><a href="#{{ collection.handle }}">{{ collection.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="products">
+        {% for collection in collections %}
+          {%
+            render 'product_list',
+            collection_handle: collection.handle,
+            title: collection.title,
+            section_id: section.id,
+            class_name: collection.handle,
+            id: collection.handle
+          %}
+        {% endfor %}
+      </section>
+    </section>
+  {% else %}
+    <h1>{{ 'general.unavailable.heading' | t }}</h1>
+    <p>{{ 'general.unavailable.message' | t }}</p>
+  {% endif %}
 {% endif %}

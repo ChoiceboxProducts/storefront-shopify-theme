@@ -5,14 +5,16 @@
   - is_ordered: indicates if the product listing is ordered in some way
   - title: display title for product list
   - section_id: section id
+  - id: CSS id
 {% endcomment %}
 
 {% if collections[collection_handle] != empty %}
-  <section class="products
-    {% if class_name != blank %}
-      {{ class_name }}
+  <section {% if id != blank %} id={{ id }} {% endif %}
+    class="collection
+      {% if class_name != blank %}
+        {{ class_name }}
       {% if section_id != blank %}
-        collection-{{ section_id }}
+        {{ class_name }}-{{ section_id }}
       {% endif %}
     {% endif %}">
 
@@ -26,7 +28,7 @@
       {% assign list_tag_name = "ul" %}
     {% endif %}
 
-    <{{ list_tag_name }} class="collection">
+    <{{ list_tag_name }} class="product-list">
       {% for product in collections[collection_handle].products %}
         <li>
           <a class="product" href="{{ product.url }}">

@@ -1,84 +1,11 @@
-<style>
-  .featured .collection{
-    padding: 0;
-    list-style: none;
-  }
-
-  .featured .collection figure {
-    margin: 0;
-  }
-
-  .featured .collection figure img {
-    border-radius: 4px;
-    width: 100%;
-  }
-
-  .featured .collection {
-    display: flex;
-  }
-
-  .featured .collection li {
-    flex: 1 0;
-  }
-
-  .featured .collection li + li {
-    margin-left: 2%;
-  }
-
-  .featured .product-title {
-    --max-font-size: 1.25;  /* rem */
-    --min-font-size: 1;  /* rem */
-    --font-size-delta: calc(var(--max-font-size) - var(--min-font-size));
-    --transition-start-width: 100;  /* rem, NOTE: remember to change media queries below when changing this value */
-    --transition-end-width: 64;     /* rem, NOTE: remember to change media queries below when changing this value */
-    --transition-width-delta: calc(var(--transition-start-width) - var(--transition-end-width));
-    font-size: calc(var(--max-font-size) * 1rem);
-    font-family: {{ settings.display_font }};
-    font-weight: 700;
-    margin: 0.5rem 0 0;
-  }
-
-  @media (max-width: 100rem) {
-    .featured .product-title {
-      font-size: calc((var(--max-font-size) * 1rem) - ((((var(--transition-start-width) * 1rem) - 100vw) / var(--transition-width-delta)) * var(--font-size-delta)));
-    }
-  }
-
-  @media (max-width: 64rem) {
-    .featured .product-title {
-      font-size: calc(var(--min-font-size) * 1rem);
-    }
-  }
-
-  .featured .short-description {
-    font-size: 1.125rem;
-    margin: 0;
-  }
-
-  .featured figure > div {
-    position: relative;
-  }
-
-  .featured figure .product-price {
-    background-color: var(--positive-accent-color);
-    border-radius: 4px;
-    bottom: 2rem;
-    color: #fff;
-    font-family: {{ settings.display_font }};
-    font-weight: 700;
-    padding: 0.7rem 0.8rem 0.3rem;
-    position: absolute;
-    right: 1.5rem;
-  }
-</style>
-
 {% if section.settings.collection_handle != blank %}
   {%
     render 'product_list',
     collection_handle: section.settings.collection_handle,
     title: "Featured",
     section_id: section.id,
-    class_name: "featured"
+    class_name: "featured",
+    id: "featured"
   %}
 {% endif %}
 
