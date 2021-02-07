@@ -10,8 +10,20 @@
         }
 
         .facets {
-          width: 20rem;
-          margin-right: 2%;
+          flex: 1 0;
+        }
+
+        .facets > div {
+          margin-right: 2vw;
+          position: sticky;
+          top: cakc(var(--page-border-width) + var(--header-margin-top) + var(--header-height));
+        }
+
+        .facets h2 {
+          font-size: 1.25rem;
+          letter-spacing: 0.05em;
+          opacity: 0.5;
+          text-transform: uppercase;
         }
 
         .facets ul {
@@ -29,19 +41,21 @@
         }
 
         .products {
-          flex: 1 0;
+          flex: 3 0;
         }
       </style>
 
       <h1 class="visually-hidden">All Products</h1>
 
       <section class="facets">
-        <h2>{{ 'general.products.category' | t: count: 'other' }}</h2>
-        <ul>
-          {% for collection in collections %}
-            <li><a href="#{{ collection.handle }}">{{ collection.title }}</a></li>
-          {% endfor %}
-        </ul>
+        <div>
+          <h2>{{ 'general.products.category' | t: count: 'other' }}</h2>
+          <ul>
+            {% for collection in collections %}
+              <li><a href="#{{ collection.handle }}">{{ collection.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
       </section>
 
       <section class="products">

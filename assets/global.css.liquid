@@ -65,6 +65,10 @@
   --primary-accent-color: {{ settings.primary_accent_color }};
   --page-horizontal-padding: 10%;
   --input-border-radius: 100rem;  /* Such a large value creates a rectangle with a constant radius corner */
+
+  /* Layout */
+  --header-height: 6rem;
+  --header-margin-top: 4rem;
 }
 
 /* General */
@@ -346,7 +350,7 @@ a.product:visited {
 
 .product-list {
   display: grid;
-  grid-gap: 2%;
+  grid-gap: 2rem 2%;
   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
 }
 

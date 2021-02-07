@@ -2,7 +2,8 @@
   <style>
     .page-footer {
       flex: 0 0;
-      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      padding-top: 5rem;
       line-height: 1.2;
     }
 
@@ -15,6 +16,12 @@
 
     .page-footer ul {
       margin: 0;
+    }
+
+    @media (max-width: 46rem) {
+      .page-footer ul {
+        padding-left: 0;
+      }
     }
 
     .page-footer .links {
@@ -36,10 +43,15 @@
       margin-bottom: 5rem;
     }
 
+    .page-footer .link-lists > div {
+      padding-right: 2vw;
+      width: 25%;
+      box-sizing: border-box;
+    }
+
     .page-footer .link-list {
       list-style: none;
       font-size: 1rem;
-      margin-right: 8rem;
     }
 
     .page-footer .link-list a {
