@@ -34,7 +34,7 @@
           <a class="product" href="{{ product.url }}">
             <figure>
               <div>
-                <img src="{{ product.featured_image | img_url: '288x288' }}" alt="{{ product.title | strip_html }}" />
+                <img class="product-photo" src="{{ product.featured_image | img_url: '288x288' }}" alt="{{ product.title | strip_html }}" />
                 <span class="product-price">{{ product.price | money_without_trailing_zeros }}</span>
               </div>
               <figcaption>

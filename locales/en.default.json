@@ -41,6 +41,9 @@
         "message_from_the_founders": {
             "call_to_action": "Find out more"
         },
+        "product": {
+            "back_to_product_listings": "Back to product listings"
+        },
         "products": {
             "category": {
                 "one": "Category",

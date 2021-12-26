@@ -2,33 +2,150 @@
   <h1>{{ 'general.unavailable.heading' | t }}</h1>
   <p>{{ 'general.unavailable.message' | t }}</p>
 {% else %}
-  {% assign current_variant = product.selected_or_first_available_variant %}
-  {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
-  <img src="{{ featured_image | img_url: 'large' }}" alt="{{ featured_image.alt | escape }}" id="ProductPhotoImg">
-  {% for image in product.images %}
-    <a href="{{ image.src | img_url: 'large' }}">
-      <img src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
-    </a>
-  {% endfor %}
-  <h1>{{ product.title }}</h1>
-  <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
-    <select name="id" id="productSelect">
-      {% for variant in product.variants %}
-        {% if variant.available %}
-          <option value="{{ variant.id }}">
-            {{ variant.title }} - {{ variant.price | money_with_currency }}
-          </option>
-        {% else %}
-          <option disabled="disabled">
-            {{ variant.title }} - sold out
-          </option>
-        {% endif %}
-      {% endfor %}
-    </select>
-    {{ current_variant.price | money }}
-    <label for="Quantity">quantity</label>
-    <input type="number" id="Quantity" name="quantity" value="1" min="1">
-    <button type="submit" name="add" id="AddToCart">Add to cart</button>
-  </form>
-  <div>{{ product.description }}</div>
+  <style>
+    .product-description {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: min-content 1fr;
+      grid-template-areas: "photos heading"
+                           "photos details";
+      grid-gap: 1rem 3rem;
+      color: var(--default-copy-color);
+    }
+
+    .product-header {
+      grid-area: heading;
+      border-bottom: 3px solid rgba(0, 0, 0, 0.1);
+      margin-bottom: 0.8rem;
+      font-size: 1rem;
+    }
+
+    .product-header h1 {
+      display: flex;
+      white-space: pre;
+    }
+
+    .product-description .item-count {
+      opacity: 0.5;
+    }
+
+    .product-description .product-name {
+      font-weight: 600;
+    }
+
+    .product-description h1 {
+      margin-top: 0;
+      font-size: 1.93rem;
+    }
+
+    .product-description .product-details {
+      grid-area: details;
+    }
+
+    .product-description .product-photos {
+      grid-area: photos;
+    }
+
+    .product-description .product-photos > img {
+      width: 100%;
+    }
+
+    .product-description .product-items {
+      list-style: none;
+    }
+
+    .product-price {
+      color: var(--positive-accent-color);
+      flex: 1;
+      text-align: right;
+    }
+
+    .back-to-listings::before {
+      content: url("data:image/svg+xml,%3Csvg width='25' height='21' viewBox='0 0 25 21' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath opacity='0.6' d='M2 10.5L23 10.5M10.1667 18.6667L2 10.5L10.1667 18.6667ZM2 10.5L10.1667 2.33333L2 10.5Z' stroke='%23223B60' stroke-width='2.88889' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+    }
+
+    .product-options {
+      margin-bottom: 1rem;
+    }
+
+    .product-option {
+      display: inline-block;
+      position: relative;
+      padding: 0.5rem 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      font-size: 0.98rem;
+    }
+
+    .product-option input[type="radio"] {
+      border: 3px solid #2B749E;
+      border-radius: 4px;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      z-index: 1;
+      cursor: pointer;
+    }
+
+    .product-option label {
+      color: #2B749E;
+      position: relative;
+      z-index: 2;
+      cursor: pointer;
+    }
+
+    .product-option input[type="radio"]:disabled {
+      border-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .product-option input[type="radio"]:checked {
+      background-color: #fff;
+    }
+
+    .add-to-cart {
+      margin-top: 1rem;
+    }
+  </style>
+
+  <a href="" class="back-to-listings">{{ "general.product.back_to_product_listings" | t }}</a>
+  <div class="product-listing">
+    <section id="product-description" class="product-description">
+      <header class="product-header">
+        <h1>{{ product.title }} <span class="product-price">{{ product.price |  money_without_trailing_zeros }}</span></h1>
+        <p>Price includes free shipping and sales tax where applicable.</p>
+      </header>
+      <section id="product-photos" class="product-photos">
+        {% assign current_variant = product.selected_or_first_available_variant %}
+        {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+        <img class="product-photo" src="{{ featured_image | img_url: 'large' }}" alt="{{ featured_image.alt | escape }}" id="ProductPhotoImg">
+        {% for image in product.images %}
+          <a href="{{ image.src | img_url: 'large' }}">
+            <img class="product-photo" src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
+          </a>
+        {% endfor %}
+      </section>
+      <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="product-details">
+        <div class="product-options">
+          {% for variant in product.variants %}
+            <div class="product-option">
+              <input
+                type="radio"
+                id="{{ variant.id }}"
+                name="id"
+                value="{{ variant.id }}"
+                {% if variant.title == current_variant.title %}checked="checked"{% endif %} />
+              <label for="{{ variant.id }}">{{ variant.title }}</label>
+            </div>
+          {% endfor %}
+        </div>
+        {{ product.description }}
+        <button class="add-to-cart" type="submit" name="add" id="AddToCart">Add to cart</button>
+      </form>
+    </section>
+    <section id="product-reviews"></section>
+  </div>
 {% endif %}
