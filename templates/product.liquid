@@ -107,6 +107,7 @@
     }
 
     .add-to-cart {
+      display: block;
       margin-top: 1rem;
     }
   </style>
@@ -116,7 +117,7 @@
     <section id="product-description" class="product-description">
       <header class="product-header">
         <h1>{{ product.title }} <span class="product-price">{{ product.price |  money_without_trailing_zeros }}</span></h1>
-        <p>Price includes free shipping and sales tax where applicable.</p>
+        <p>{{ 'general.product.price_includes_statement' | t }}</p>
       </header>
       <section id="product-photos" class="product-photos">
         {% assign current_variant = product.selected_or_first_available_variant %}
@@ -130,19 +131,25 @@
       </section>
       <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="product-details">
         <div class="product-options">
-          {% for variant in product.variants %}
-            <div class="product-option">
-              <input
-                type="radio"
-                id="{{ variant.id }}"
-                name="id"
-                value="{{ variant.id }}"
-                {% if variant.title == current_variant.title %}checked="checked"{% endif %} />
-              <label for="{{ variant.id }}">{{ variant.title }}</label>
-            </div>
-          {% endfor %}
+          {% if product.variants.size > 1 %}
+            {% for variant in product.variants %}
+              <div class="product-option">
+                <input
+                  type="radio"
+                  id="{{ variant.id }}"
+                  name="id"
+                  value="{{ variant.id }}"
+                  {% if variant.title == current_variant.title %}checked="checked"{% endif %} />
+                <label for="{{ variant.id }}">{{ variant.title }}</label>
+              </div>
+            {% endfor %}
+          {% endif %}
         </div>
-        {{ product.description }}
+        {% if product.description != "" %}
+          {{ product.description | strip }}
+        {% else %}
+          {{ 'general.product.no_description_html' | t }}
+        {% endif %}
         <button class="add-to-cart" type="submit" name="add" id="AddToCart">Add to cart</button>
       </form>
     </section>
