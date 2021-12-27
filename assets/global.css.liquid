@@ -506,6 +506,17 @@ main,
   }
 }
 
+/* Product page */
+
+.product main {
+  --max-margin-top: 3; /* rem */
+  --min-margin-top: 2;  /* rem */
+  --margin-top-delta: calc(var(--max-margin-top) - var(--min-margin-top));
+  --transition-start-width: 46; /* rem, NOTE: remember to change media queries below when changing this value */
+  --transition-end-width: 26;   /* rem, NOTE: remember to change media queries below when changing this value */
+  --transition-width-delta: calc(var(--transition-start-width) - var(--transition-end-width));
+}
+
 /* Logo */
 .logo {
   fill: {{ settings.logo_primary_color }}
