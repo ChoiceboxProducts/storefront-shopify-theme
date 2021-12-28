@@ -15,13 +15,18 @@
 
     .product-header {
       grid-area: heading;
+      padding-bottom: 1rem;
       border-bottom: 3px solid rgba(0, 0, 0, 0.1);
-      margin-bottom: 0.8rem;
-      font-size: 1.0625rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .add-to-cart {
+      padding-bottom: 1rem;
+      border-bottom: 3px solid rgba(0, 0, 0, 0.1);
+      margin-bottom: 0.5rem;
     }
 
     .product-header h1 {
-      display: flex;
       white-space: pre;
       margin-top: 0;
       font-size: 1.93rem;
@@ -51,10 +56,20 @@
       list-style: none;
     }
 
+    .add-to-cart {
+      align-items: center;
+      display: flex;
+      margin: 1rem 0;
+      justify-content: space-between;
+    }
+
     .product-price {
       color: var(--positive-accent-color);
-      flex: 1;
       text-align: right;
+      font-weight: 600;
+      border-radius: 4px;
+      padding: 0.3rem 0.5rem;
+      position: relative;
     }
 
     .back-to-listings {
@@ -94,16 +109,18 @@
     }
 
     .product-option {
+      --active-color: #2b749e;
       display: inline-block;
       position: relative;
       padding: 0.5rem 1rem;
-      font-weight: 700;
+      font-weight: 600;
       margin-bottom: 0.5rem;
       font-size: 0.98rem;
+      user-select: none;
     }
 
     .product-option input[type="radio"] {
-      border: 3px solid #2B749E;
+      border: 3px solid var(--active-color);
       border-radius: 4px;
       height: 100%;
       position: absolute;
@@ -114,10 +131,28 @@
       width: 100%;
       z-index: 1;
       cursor: pointer;
+      transition: background-color 100ms;
+    }
+
+    .product-option input[type="radio"]:before {
+      content: "";
+      width: calc(100% + 6px);
+      height: calc(100% + 6px);
+      position: absolute;
+      background-color: #f00;
+      transform: translate(-3px, -3px);
+      border-radius: 4px;
+      background-color: var(--active-color);
+      opacity: 0;
+      transition: opacity 100ms;
+    }
+
+    .product-option input[type="radio"]:hover:before {
+      opacity: 0.5;
     }
 
     .product-option label {
-      color: #2B749E;
+      color: var(--active-color);
       position: relative;
       z-index: 2;
       cursor: pointer;
@@ -128,12 +163,17 @@
     }
 
     .product-option input[type="radio"]:checked {
-      background-color: #fff;
+      background-color: var(--active-color);
     }
 
-    .add-to-cart {
-      display: block;
-      margin-top: 1rem;
+    .product-option input[type="radio"]:hover + label,
+    .product-option input[type="radio"]:checked + label {
+      color: #fff;
+    }
+
+    .auxiliary {
+      font-size: 1.0625rem;
+      line-height: 1.3;
     }
   </style>
 
@@ -154,23 +194,30 @@
   <div class="product-listing">
     <section id="product-description" class="product-description">
       <header class="product-header">
-        <h1>{{ product.title }} <span class="product-price">{{ product.price |  money_without_trailing_zeros }}</span></h1>
-        <p>{{ 'general.product.price_includes_statement' | t }}</p>
+        <h1>{{ product.title }}</h1>
       </header>
       <section id="product-photos" class="product-photos">
         {% assign current_variant = product.selected_or_first_available_variant %}
         {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
-        <img class="product-photo" src="{{ featured_image | img_url: 'large' }}" alt="{{ featured_image.alt | escape }}" id="ProductPhotoImg">
+        <img class="product-photo" src="{{ featured_image | img_url: 'large' }}" alt="{{ featured_image.alt | escape }}" id="produc-photo-img">
+
         {% for image in product.images %}
           <a href="{{ image.src | img_url: 'large' }}">
-            <img class="product-photo" src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
+            <img class="product-photo" src="{{ image.src | img_url: '200x200' }}" alt="{{ image.alt | escape }}">
           </a>
         {% endfor %}
       </section>
       <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="product-details">
 
+        {% if product.description != "" %}
+          {{ product.description | strip }}
+        {% else %}
+          {{ 'general.product.no_description_html' | t }}
+        {% endif %}
+
         {% if product.variants.size > 1 %}
           <div class="product-options">
+            <p class="auxiliary">{{ 'general.product.select_size' | t }}:</p>
             {% for variant in product.variants %}
               <div class="product-option">
                 <input
@@ -185,12 +232,12 @@
           </div>
         {% endif %}
 
-        {% if product.description != "" %}
-          {{ product.description | strip }}
-        {% else %}
-          {{ 'general.product.no_description_html' | t }}
-        {% endif %}
-        <button class="add-to-cart" type="submit" name="add" id="AddToCart">Add to cart</button>
+        <div class="add-to-cart">
+          <button type="submit" name="add" id="AddToCart">Add to cart</button>
+          <span class="product-price"> {{ product.price |  money_without_trailing_zeros }}</span>
+        </div>
+        <p class="auxiliary"><small>{{ 'general.product.price_includes_statement' | t }}</small>
+        <small>{{ 'general.product.substitution_warning' | t }}</small></p>
       </form>
     </section>
     <section id="product-reviews"></section>
