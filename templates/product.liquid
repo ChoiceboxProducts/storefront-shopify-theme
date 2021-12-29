@@ -173,7 +173,7 @@
 
     .auxiliary {
       font-size: 1.0625rem;
-      line-height: 1.3;
+      line-height: 1.1;
     }
 
     .product-thumbnails {
@@ -211,7 +211,7 @@
           {% endfor %}
         </div>
       </section>
-      <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="product-details">
+      <form action="/cart/add" method="post" enctype="multipart/form-data" id="addToCartForm" class="product-details">
 
         {% if product.description != "" %}
           {{ product.description | strip }}
@@ -237,7 +237,7 @@
         {% endif %}
 
         <div class="add-to-cart">
-          <button type="submit" name="add" id="AddToCart">Add to cart</button>
+          <button type="submit" name="add" id="addToCart">Add to cart</button>
           <span class="product-price"> {{ product.price |  money_without_trailing_zeros }}</span>
         </div>
         <p class="auxiliary"><small>{{ 'general.product.price_includes_statement' | t }}</small>
@@ -267,6 +267,19 @@
       const variantId = option.value;
       option.addEventListener("click", () => {
         window.history.replaceState(null, null, `?variant=${variantId}`);
+      });
+    });
+  }());
+
+  // Disable 'Add to cart' button after being clicked
+  (function () {
+    const productForm = document.forms.addToCartForm;
+    const addToCartButtons = productForm.querySelectorAll("[type='submit']");
+
+    productForm.addEventListener("submit", () => {
+      addToCartButtons.forEach((button) => {
+        console.log("disabling...");
+        button.disabled = true;
       });
     });
   }());

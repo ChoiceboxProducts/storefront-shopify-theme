@@ -196,15 +196,27 @@ input[type="submit"] {
   background-repeat: no-repeat;
   background-position: calc(100% - 1.5rem) 50%;
   padding-right: 4rem;
+  transition: transform 100ms, box-shadow 100ms;
 }
 
-.call-to-action,
-input[type="submit"] {
-  padding-right: 4rem;
+.call-to-action:hover,
+button[type="submit"]:hover,
+input[type="submit"]:hover {
+  --offset-height: 0.25rem;
+  box-shadow: var(--offset-height) var(--offset-height) rgba(0, 0, 0, 0.08);
+}
+
+button[type="submit"]:active {
+  transform: translate(var(--offset-height), var(--offset-height));
+  box-shadow: none;
 }
 
 button[type="submit"] > span {
   padding-right: 1rem;
+}
+
+button[disabled] {
+  background-color: #777;
 }
 
 input.unified {
