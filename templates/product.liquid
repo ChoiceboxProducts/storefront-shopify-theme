@@ -175,20 +175,22 @@
       font-size: 1.0625rem;
       line-height: 1.3;
     }
+
+    .product-thumbnails {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      grid-gap: 0.6rem;
+      width: 100%;
+    }
+
+    .product-thumbnails > a {
+      font-size: 0;
+    }
+
+    .thumbnail {
+      width: 100%;
+    }
   </style>
-
-  <script>
-    (function () {
-      // Check to see if the user navigated to the product page from the
-      // Choicebox product page(s) using `document.referrer`.
-
-      // TODO: Dynamically update the 'back to product listing' link depending
-      // on where the user came from. If the referrer contains:
-      //  * From a Choicebox product listing page -> back to the correct page#
-      //  * From another site -> back to the main Choicebox product listing page
-      //  * Bookmark/direct -> back to the main Choicebix product listing page
-    }());
-  </script>
 
   <a href="/collections/all" class="back-to-listings">{{ "general.product.back_to_product_listings" | t }}</a>
   <div class="product-listing">
@@ -201,11 +203,13 @@
         {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
         <img class="product-photo" src="{{ featured_image | img_url: 'large' }}" alt="{{ featured_image.alt | escape }}" id="produc-photo-img">
 
-        {% for image in product.images %}
-          <a href="{{ image.src | img_url: 'large' }}">
-            <img class="product-photo" src="{{ image.src | img_url: '200x200' }}" alt="{{ image.alt | escape }}">
-          </a>
-        {% endfor %}
+        <div class="product-thumbnails">
+          {% for image in product.images %}
+            <a href="{{ image.src | img_url: 'large' }}">
+              <img class="product-photo thumbnail" src="{{ image.src | img_url: '200x200' }}" alt="{{ image.alt | escape }}">
+            </a>
+          {% endfor %}
+        </div>
       </section>
       <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="product-details">
 
@@ -243,3 +247,27 @@
     <section id="product-reviews"></section>
   </div>
 {% endif %}
+
+<script>
+  // Check to see if the user navigated to the product page from the
+  // Choicebox product page(s) using `document.referrer`.
+  (function () {
+    // TODO: Dynamically update the 'back to product listing' link depending
+    // on where the user came from. If the referrer contains:
+    //  * From a Choicebox product listing page -> back to the correct page#
+    //  * From another site -> back to the main Choicebox product listing page
+    //  * Bookmark/direct -> back to the main Choicebix product listing page
+  }());
+
+  // Modify the URL when the user selects product options
+  (function () {
+    const sizeRadioButtons = document.querySelectorAll(".product-options input[type='radio']");
+
+    sizeRadioButtons.forEach((option) => {
+      const variantId = option.value;
+      option.addEventListener("click", () => {
+        window.history.replaceState(null, null, `?variant=${variantId}`);
+      });
+    });
+  }());
+</script>
