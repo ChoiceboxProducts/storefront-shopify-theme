@@ -242,11 +242,11 @@
 
         <div id="product-action-bar" class="action-bar">
           {% if current_variant.available == false %}<template id="product-is-available">{% endif %}
-          <button type="submit" name="add" id="add-to-cart">{{ 'general.product.add_to_cart' | t }}</button>
+          <button id="product-is-available-content" type="submit" name="add" id="add-to-cart">{{ 'general.product.add_to_cart' | t }}</button>
           {% if current_variant.available == false %}</template>{% endif %}
 
           {% if current_variant.available == true %}<template id="product-is-not-available">{% endif %}
-          <span class="button out-of-stock important">{{ 'general.product.out_of_stock' | t }}</span>
+          <span id="product-is-not-available-content" class="button out-of-stock important">{{ 'general.product.out_of_stock' | t }}</span>
           {% if current_variant.available == true %}</template>{% endif %}
 
           <span class="product-price"> {{ product.price |  money_without_trailing_zeros }}</span>
@@ -276,6 +276,20 @@
     const sizeRadioButtons = document.querySelectorAll(".product-options input[type='radio']");
     const variants = {{ product.variants | json }};
 
+    function swapContent(fromTemplateId, toTemplateId) {
+      const toTemplate = document.getElementById(toTemplateId);
+
+      if (toTemplate) {
+        actionBar.replaceChild(toTemplate.content, toTemplate);
+        fromTemplate = document.createElement("template");
+        fromTemplate.id = fromTemplateId;
+
+        const fromContent = document.getElementById(`${fromTemplateId}-content`);
+        actionBar.insertBefore(fromTemplate, fromContent);
+        fromTemplate.content.appendChild(fromContent);
+      }
+    }
+
     sizeRadioButtons.forEach((variantOption, index) => {
       const variantId = variantOption.value;
       const variant = variants[index];
@@ -283,24 +297,11 @@
       variantOption.addEventListener("click", () => {
         window.history.replaceState(null, null, `?variant=${variantId}`);
 
-        let addToCartTemplate = document.getElementById("product-is-available");
-        let outOfStockTemplate = document.getElementById("product-is-not-available");
-        const addToCartButton = document.getElementById("add-to-cart");
-        const outOfStockLabel = actionBar.querySelector(".out-of-stock");
-
         // Toggle 'add to cart' message
         if (variant.available) {
-          actionBar.replaceChild(addToCartTemplate.content, addToCartTemplate);
-          outOfStockTemplate = document.createElement("template");
-          outOfStockTemplate.id = "product-is-not-available";
-          actionBar.insertBefore(outOfStockTemplate, outOfStockLabel);
-          outOfStockTemplate.content.appendChild(outOfStockLabel);
-        } else if (outOfStockTemplate) {
-          actionBar.replaceChild(outOfStockTemplate.content, outOfStockTemplate);
-          addToCartTemplate = document.createElement("template");
-          addToCartTemplate.id = "product-is-available";
-          actionBar.insertBefore(addToCartTemplate, addToCartButton);
-          addToCartTemplate.content.appendChild(addToCartButton);
+          swapContent("product-is-not-available", "product-is-available");
+        } else {
+          swapContent("product-is-available", "product-is-not-available");
         }
       });
     });
