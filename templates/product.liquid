@@ -20,10 +20,14 @@
       margin-bottom: 0.5rem;
     }
 
-    .add-to-cart {
+    .action-bar {
       padding-bottom: 1rem;
       border-bottom: 3px solid rgba(0, 0, 0, 0.1);
       margin-bottom: 0.5rem;
+      align-items: center;
+      display: flex;
+      margin: 1rem 0;
+      justify-content: space-between;
     }
 
     .product-header h1 {
@@ -54,13 +58,6 @@
 
     .product-description .product-items {
       list-style: none;
-    }
-
-    .add-to-cart {
-      align-items: center;
-      display: flex;
-      margin: 1rem 0;
-      justify-content: space-between;
     }
 
     .product-price {
@@ -190,6 +187,13 @@
     .thumbnail {
       width: 100%;
     }
+
+    .out-of-stock {
+      background-color: transparent;
+      color: var(--negative-accent-color);
+      box-shadow: inset 0 0 0 3px;
+      cursor: default;
+    }
   </style>
 
   <a href="/collections/all" class="back-to-listings">{{ "general.product.back_to_product_listings" | t }}</a>
@@ -211,7 +215,7 @@
           {% endfor %}
         </div>
       </section>
-      <form action="/cart/add" method="post" enctype="multipart/form-data" id="addToCartForm" class="product-details">
+      <form action="/cart/add" method="post" enctype="multipart/form-data" id="add-to-cart-form" class="product-details">
 
         {% if product.description != "" %}
           {{ product.description | strip }}
@@ -236,8 +240,15 @@
           </div>
         {% endif %}
 
-        <div class="add-to-cart">
-          <button type="submit" name="add" id="addToCart">Add to cart</button>
+        <div id="product-action-bar" class="action-bar">
+          {% if current_variant.available == false %}<template id="product-is-available">{% endif %}
+          <button type="submit" name="add" id="add-to-cart">{{ 'general.product.add_to_cart' | t }}</button>
+          {% if current_variant.available == false %}</template>{% endif %}
+
+          {% if current_variant.available == true %}<template id="product-is-not-available">{% endif %}
+          <span class="button out-of-stock important">{{ 'general.product.out_of_stock' | t }}</span>
+          {% if current_variant.available == true %}</template>{% endif %}
+
           <span class="product-price"> {{ product.price |  money_without_trailing_zeros }}</span>
         </div>
         <p class="auxiliary"><small>{{ 'general.product.price_includes_statement' | t }}</small>
@@ -261,19 +272,43 @@
 
   // Modify the URL when the user selects product options
   (function () {
+    const actionBar = document.getElementById("product-action-bar");
     const sizeRadioButtons = document.querySelectorAll(".product-options input[type='radio']");
+    const variants = {{ product.variants | json }};
 
-    sizeRadioButtons.forEach((option) => {
-      const variantId = option.value;
-      option.addEventListener("click", () => {
+    sizeRadioButtons.forEach((variantOption, index) => {
+      const variantId = variantOption.value;
+      const variant = variants[index];
+
+      variantOption.addEventListener("click", () => {
         window.history.replaceState(null, null, `?variant=${variantId}`);
+
+        let addToCartTemplate = document.getElementById("product-is-available");
+        let outOfStockTemplate = document.getElementById("product-is-not-available");
+        const addToCartButton = document.getElementById("add-to-cart");
+        const outOfStockLabel = actionBar.querySelector(".out-of-stock");
+
+        // Toggle 'add to cart' message
+        if (variant.available) {
+          actionBar.replaceChild(addToCartTemplate.content, addToCartTemplate);
+          outOfStockTemplate = document.createElement("template");
+          outOfStockTemplate.id = "product-is-not-available";
+          actionBar.insertBefore(outOfStockTemplate, outOfStockLabel);
+          outOfStockTemplate.content.appendChild(outOfStockLabel);
+        } else if (outOfStockTemplate) {
+          actionBar.replaceChild(outOfStockTemplate.content, outOfStockTemplate);
+          addToCartTemplate = document.createElement("template");
+          addToCartTemplate.id = "product-is-available";
+          actionBar.insertBefore(addToCartTemplate, addToCartButton);
+          addToCartTemplate.content.appendChild(addToCartButton);
+        }
       });
     });
   }());
 
   // Disable 'Add to cart' button after being clicked
   (function () {
-    const productForm = document.forms.addToCartForm;
+    const productForm = document.forms["add-to-cart-form"];
     const addToCartButtons = productForm.querySelectorAll("[type='submit']");
 
     productForm.addEventListener("submit", () => {

@@ -46,7 +46,9 @@
             "price_includes_statement": "Price includes sales tax and free shipping where applicable.",
             "no_description_html": "There is no description for this product. Please check back later. For more information please <a href=\"/pages/contact-us\">contact us</a>.",
             "select_size": "Select size",
-            "substitution_warning": "We do our very best to complete the order as described; if unavailable we may substitute up to one brand from the list above."
+            "substitution_warning": "We do our very best to complete the order as described; if unavailable we may substitute up to one brand from the list above.",
+            "add_to_cart": "Add to cart",
+            "out_of_stock": "Out of stock"
         },
         "products": {
             "category": {
