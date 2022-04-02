@@ -81,7 +81,7 @@
   {% endif %}
 
   {% if settings.pause_sales != true %}
-    {% if linklists.main-menu.links != blank or request.page_type != 'cart' %}
+    {% if linklists.main-menu.links != blank and request.page_type != 'cart' %}
       <nav class="top-level">
         <ul>
           {% for link in linklists.main-menu.links %}
