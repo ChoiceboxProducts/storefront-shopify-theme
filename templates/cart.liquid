@@ -2,50 +2,120 @@
   <h1>{{ 'general.unavailable.heading' | t }}</h1>
   <p>{{ 'general.unavailable.message' | t }}</p>
 {% else %}
+  <style>
+    .cart-items {
+      table-layout: fixed;
+      width: 100%;
+      border-bottom: 3px solid rgba(0, 0, 0, 0.1);
+      margin-bottom: 1rem;
+      border-collapse: separate;
+      border-spacing: 0 1rem;
+    }
+
+    .cart-items td:first-child {
+      border-radius: 8px 0 0 8px;
+      padding: 1rem;
+    }
+
+    .cart-items tbody td:last-child {
+      border-radius: 0 8px 8px 0;
+      padding-right: 1.5rem;
+      text-align: right;
+      padding: 1rem;
+    }
+
+    .cart-items td {
+      vertical-align: middle;
+      padding: 1rem 0;
+    }
+
+    .cart-items a {
+      text-decoration: none;
+    }
+
+    tbody .cart-item td {
+      background-color: #fff;
+    }
+
+    .cart-items th {
+      text-align: left;
+    }
+
+    .cart-items .product-image,
+    .cart-item .product-image a {
+      width: 6rem;
+    }
+
+    .cart-items .product-image a img {
+      display: block;
+    }
+
+    .cart-items .product-photo {
+      width: 100%;
+    }
+
+    .cart-items .product {
+      padding-left: 1rem;
+      width: 40%;
+    }
+
+    .cart-item .product p {
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .money {
+      text-align: right;
+    }
+
+    .total {
+      font-weight: 700;
+    }
+
+    tfoot th {
+      font-weight: 400;
+    }
+
+
+  </style>
+
+  <h1>{{ 'general.cart.title' | t }}</h1>
   {% if cart.item_count > 0 %}
-    <h1>cart</h1>
     <form action="/cart" method="post" novalidate>
-      <table>
-        <thead>
-          <th colspan="2">Prod</th>
-          <th>Price</th>
-          <th>Qty</th>
-          <th>total</th>
-        </thead>
+      <table class="cart-items" cell-spacing="0">
         <tbody>
           {% for item in cart.items %}
-            <tr>
-              <td>
+            <tr class="cart-item">
+              <td class="product-image">
                 <a href="{{ item.url | within: collections.all }}">
-                  <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
+                  <img class="product-photo" src="{{ item | img_url: '200x200' }}" alt="{{ item.title | escape }}">
                 </a>
               </td>
-              <td>
-                <a href="{{ item.url }}">{{ item.product.title }}</a>
+              <td class="product">
+                <p><a href="{{ item.url }}">{{ item.product.title }}</a></p>
                 {{ item.variant.title }}
-                <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">remove</a>
               </td>
-              <td>{{ item.price | money }}</td>
-              <td>
-                <input type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0">
-              </td>
-              <td>
+              <td class="money price">
                 {% if item.original_line_price != item.line_price %}{{ item.original_line_price | money }}{% endif %}
                 {{ item.line_price | money }}
                 {% for discount in item.discounts %}{{ discount.title }}{% endfor %}
               </td>
+              <td><a class="secondary negative button" href="/cart/change?line={{ forloop.index }}&amp;quantity=0">{{ 'general.cart.remove' | t }}</a></td>
             </tr>
           {% endfor %}
         </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="2">{{ 'general.cart.total_price_inc_shipping_and_tax_html' | t }}:</th>
+            <td class="money total">{{ cart.total_price | money }}</td>
+          </tr>
+        </tfoot>
       </table>
       <div>
-        <p>sub total : {{ cart.total_price | money }}</p>
-        <button type="submit" name="update">Update</button>
         <button type="submit" name="checkout">Checkout</button>
       </div>
     </form>
   {% else %}
-    <h2>cart</h2>
-    Cart is empty
+    <p>{{ 'general.cart.empty_cart_html' | t }}</p>
   {% endif %}
 {% endif %}

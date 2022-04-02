@@ -55,6 +55,12 @@
                 "one": "Category",
                 "other": "Categories"
             }
+        },
+        "cart": {
+            "title": "Cart",
+            "empty_cart_html": "Your cart is empty. Find the perfect item in our <a href=\"/collections/all\">collection</a> to change that :)",
+            "remove": "Remove",
+            "total_price_inc_shipping_and_tax_html": "<span class=\"total\">Total</span> including shipping and tax"
         }
     }
 }
