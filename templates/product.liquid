@@ -352,7 +352,6 @@
 
     productForm.addEventListener("submit", () => {
       addToCartButtons.forEach((button) => {
-        console.log("disabling...");
         button.disabled = true;
       });
     });
@@ -366,7 +365,7 @@
 
     productThumbnails.forEach((thumbnail) => {
       thumbnail.removeAttribute("href");
-      thumbnail.addEventListener("click", () => {
+      thumbnail.addEventListener("mousedown", () => {
         const selectedThumbnails = thumbnail.parentNode.querySelectorAll(`.${SELECTED_THUMBNAIL_CLASSNAME}`);
         selectedThumbnails.forEach((selectedThumbnail) => {
           selectedThumbnail.classList.remove(SELECTED_THUMBNAIL_CLASSNAME);
