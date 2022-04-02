@@ -33,8 +33,8 @@
         <li>
           <a class="product" href="{{ product.url }}">
             <figure>
-              <div>
-                <img class="product-photo" src="{{ product.featured_image | img_url: '288x288' }}" alt="{{ product.title | strip_html }}" />
+              <div class="product-photo">
+                <img src="{{ product.featured_image | img_url: '288x288' }}" alt="{{ product.title | strip_html }}" width="288" height="288" loading="lazy" />
                 <span class="product-price">{{ product.price | money_without_trailing_zeros }}</span>
               </div>
               <figcaption>
