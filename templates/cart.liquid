@@ -4,36 +4,49 @@
 {% else %}
   <style>
     .cart-items {
+      --table-padding: 1.5rem;
       table-layout: fixed;
       width: 100%;
       border-bottom: 3px solid rgba(0, 0, 0, 0.1);
       margin-bottom: 1rem;
       border-collapse: separate;
-      border-spacing: 0 1rem;
+      border-spacing: 0;
+      background-color: #fff;
+      border-radius: 8px;
+      padding: var(--table-padding);
     }
 
-    .cart-items td:first-child {
-      border-radius: 8px 0 0 8px;
-      padding: 1rem;
+    .cart-items tbody tr:first-child td {
+      padding-top: 0;
     }
 
     .cart-items tbody td:last-child {
-      border-radius: 0 8px 8px 0;
-      padding-right: 1.5rem;
       text-align: right;
-      padding: 1rem;
+      width: 9rem;
     }
 
+    .cart-items th,
     .cart-items td {
       vertical-align: middle;
-      padding: 1rem 0;
+      padding-top: var(--table-padding);
+      padding-bottom: var(--table-padding);
+    }
+
+    .cart-items tfoot th,
+    .cart-items tfoot td {
+      padding-top: 0.7rem;
+      padding-bottom: 0.7rem;
+    }
+
+    .cart-items td:not(:last-child) {
+      padding-right: var(--table-padding);
     }
 
     .cart-items a {
       text-decoration: none;
     }
 
-    tbody .cart-item td {
+    .cart-items tbody .cart-item td {
       background-color: #fff;
     }
 
@@ -52,11 +65,11 @@
 
     .cart-items .product-photo {
       width: 100%;
+      height: auto;
     }
 
     .cart-items .product {
-      padding-left: 1rem;
-      width: 40%;
+      width: 15rem;
     }
 
     .cart-item .product p {
@@ -64,19 +77,34 @@
       margin: 0;
     }
 
-    .money {
+    .cart-items td.quantity {
+      padding-right: 0;
       text-align: right;
     }
 
-    .total {
-      font-weight: 700;
+    .cart-items td.quantity :not(.visually-hidden):after {
+      content: "\00D7\00A0";
+    }
+
+    tbody tr + tr td {
+      border-top: 2px solid rgba(0, 0, 0, 0.1);
+    }
+
+    tfoot {
+      background-color: #def3ff;
     }
 
     tfoot th {
       font-weight: 400;
     }
 
+    .total {
+      font-weight: 700;
+    }
 
+    .money {
+      text-align: right;
+    }
   </style>
 
   <h1>{{ 'general.cart.title' | t }}</h1>
@@ -88,12 +116,22 @@
             <tr class="cart-item">
               <td class="product-image">
                 <a href="{{ item.url | within: collections.all }}">
-                  <img class="product-photo" src="{{ item | img_url: '200x200' }}" alt="{{ item.title | escape }}">
+                  <img class="product-photo" src="{{ item | image_url: width: 200, height 200 }}" alt="{{ item.title | escape }}" width="200" height="200" loading="lazy">
                 </a>
               </td>
               <td class="product">
                 <p><a href="{{ item.url }}">{{ item.product.title }}</a></p>
                 {{ item.variant.title }}
+              </td>
+              <td class="quantity">
+                <span class="{% if item.quantity == 1 %}visually-hidden{% endif %}">
+                  {{ item.quantity }}
+                </span>
+              </td>
+              <td class="per-item price">
+                <span class="{% if item.quantity == 1 %}visually-hidden{% endif %}">
+                  {{ item.price | money }}
+                </span>
               </td>
               <td class="money price">
                 {% if item.original_line_price != item.line_price %}{{ item.original_line_price | money }}{% endif %}
@@ -106,8 +144,10 @@
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="2">{{ 'general.cart.total_price_inc_shipping_and_tax_html' | t }}:</th>
+            <th></th>
+            <th colspan="3">{{ 'general.cart.total_price_inc_shipping_and_tax_html' | t }}:</th>
             <td class="money total">{{ cart.total_price | money }}</td>
+            <td></td>
           </tr>
         </tfoot>
       </table>
