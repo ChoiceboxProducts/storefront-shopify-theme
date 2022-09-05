@@ -381,8 +381,36 @@ a.product:visited {
 }
 
 .product-photo {
+  --loading-fadein-duration: 500ms;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAEBAMAAABb34NNAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAADBQTFRFklk8klIrm1copmc1r5ySnI14oJZ8nJR8p5uVj4WDoJydlJqPgGlealNMemhjeGdVW3x2lAAAABRJREFUeJxjYFRmcE1n6FzNcPY9AA5QA8H525E9AAAAAElFTkSuQmCC");
   border-radius: 4px;
   user-select: none;
+  background-size: 100%;
+  display: block;
+  height: 0;
+  overflow: hidden;
+  padding-top: 100%;
+  position: relative;
+  width: 100%;
+  transition: outline 200ms;
+}
+
+.product-photo > img {
+  background: none;
+  font-size: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
+
+.product-photo > img {
+  transition: opacity var(--loading-fadein-duration),
+              transform 200ms;
+}
+
+.product-photo > img.loading {
+  opacity: 0;
 }
 
 .product-list figure img {
@@ -413,15 +441,6 @@ a.product:visited {
   font-family: {{ settings.display_font }}, sans-serif;
   font-weight: 700;
   margin: 0.5rem 0 0;
-}
-
-.product-list figure > div {
-  width: 100%;
-  padding-bottom: 100%;
-  height: 0;
-  background-color: #f00;
-  position: relative;
-  overflow: hidden;
 }
 
 @media (max-width: 100rem) {

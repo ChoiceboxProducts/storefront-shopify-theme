@@ -1,0 +1,1 @@
+revealOnLoad(".product-list .product-photo img");

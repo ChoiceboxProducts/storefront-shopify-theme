@@ -105,7 +105,6 @@
       width: calc(100% + 6px);
       height: calc(100% + 6px);
       position: absolute;
-      background-color: #f00;
       transform: translate(-3px, -3px);
       border-radius: 4px;
       background-color: var(--active-color);
@@ -151,37 +150,6 @@
 
     .featured-image {
       margin-bottom: 0.5rem;
-    }
-
-    .product-photo {
-      --border-radius: 4px;
-      --loading-fadein-duration: 500ms;
-      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAEBAMAAABb34NNAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAADBQTFRFklk8klIrm1copmc1r5ySnI14oJZ8nJR8p5uVj4WDoJydlJqPgGlealNMemhjeGdVW3x2lAAAABRJREFUeJxjYFRmcE1n6FzNcPY9AA5QA8H525E9AAAAAElFTkSuQmCC");
-      background-size: 100%;
-      border-radius: var(--border-radius);
-      display: block;
-      height: 0;
-      overflow: hidden;
-      padding-top: 100%;
-      position: relative;
-      position: relative;
-      width: 100%;
-      transition: outline 200ms;
-    }
-
-    .product-photo > img {
-      background: none;
-      font-size: 0;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      transition: opacity var(--loading-fadein-duration),
-                  transform 200ms;
-    }
-
-    .product-photo > img.loading {
-      opacity: 0;
     }
 
     .product-thumbnails > .selected {
@@ -320,103 +288,6 @@
 {% endif %}
 
 <script>
-  // Check to see if the user navigated to the product page from the
-  // Choicebox product page(s) using `document.referrer`.
-  (function () {
-    // TODO: Dynamically update the 'back to product listing' link depending
-    // on where the user came from. If the referrer contains:
-    //  * From a Choicebox product listing page -> back to the correct page#
-    //  * From another site -> back to the main Choicebox product listing page
-    //  * Bookmark/direct -> back to the main Choicebix product listing page
-  }());
-
-  // Modify the URL when the user selects product options; swap out 'Add to
-  // cart' button with `out of stock` when variant is unavailable.
-  (function () {
-    const actionBar = document.getElementById("product-action-bar");
-    const sizeRadioButtons = document.querySelectorAll(".product-options input[type='radio']");
-    const variants = {{ product.variants | json }};
-
-    function swapContent(fromTemplateId, toTemplateId) {
-      const toTemplate = document.getElementById(toTemplateId);
-
-      if (toTemplate) {
-        actionBar.replaceChild(toTemplate.content, toTemplate);
-        fromTemplate = document.createElement("template");
-        fromTemplate.id = fromTemplateId;
-
-        const fromContent = document.getElementById(`${fromTemplateId}-content`);
-        actionBar.insertBefore(fromTemplate, fromContent);
-        fromTemplate.content.appendChild(fromContent);
-      }
-    }
-
-    sizeRadioButtons.forEach((variantOption, index) => {
-      const variantId = variantOption.value;
-      const variant = variants[index];
-
-      variantOption.addEventListener("click", () => {
-        window.history.replaceState(null, null, `?variant=${variantId}`);
-
-        // Toggle 'add to cart' message
-        if (variant.available) {
-          swapContent("product-is-not-available", "product-is-available");
-        } else {
-          swapContent("product-is-available", "product-is-not-available");
-        }
-      });
-    });
-  }());
-
-  // Disable 'Add to cart' button after being clicked
-  (function () {
-    const productForm = document.forms["add-to-cart-form"];
-    const addToCartButtons = productForm.querySelectorAll("[type='submit']");
-
-    productForm.addEventListener("submit", () => {
-      addToCartButtons.forEach((button) => {
-        button.disabled = true;
-      });
-    });
-  }());
-
-  // Swap the product images when selected
-  (function () {
-    const productThumbnails = document.querySelectorAll(".product-thumbnails > a");
-    const SELECTED_THUMBNAIL_CLASSNAME = "selected";
-    const imageViewer = document.querySelector(".product-photos .product-photo img");
-
-    productThumbnails.forEach((thumbnail) => {
-      thumbnail.removeAttribute("href");
-      thumbnail.addEventListener("mousedown", () => {
-        const selectedThumbnails = thumbnail.parentNode.querySelectorAll(`.${SELECTED_THUMBNAIL_CLASSNAME}`);
-        selectedThumbnails.forEach((selectedThumbnail) => {
-          selectedThumbnail.classList.remove(SELECTED_THUMBNAIL_CLASSNAME);
-        });
-
-        thumbnail.classList.add(SELECTED_THUMBNAIL_CLASSNAME);
-        const thumbnailImage = thumbnail.querySelector(".thumbnail");
-
-        imageViewer.src = thumbnailImage.src
-          .replace(`width=${thumbnailImage.getAttribute("width")}`, 'width=480')
-          .replace(`height=${thumbnailImage.getAttribute("height")}`, 'height=480')
-      })
-    });
-  }());
-
-  // Hide product images until loaded
-  (function (selector) {
-    const images = document.querySelectorAll(selector);
-    const LOADING_CLASS = "loading";
-
-    images.forEach((image) => {
-      if (!image.complete) {
-        image.addEventListener("load", (event) => {
-          event.target.classList.remove(LOADING_CLASS);
-        });
-
-        image.classList.add(LOADING_CLASS);
-      }
-    });
-  })(".product-photos .product-photo img");
+  let productVariants = {{ product.variants | json }};
 </script>
+<script src="{{ 'product.js' | asset_url }}" defer></script>
